@@ -1,0 +1,58 @@
+.footer-vscode {
+  background-color: var(--footer-bg-dark); /* Use CSS variable for dark theme footer background */
+  color: var(--text-color-light); /* Always white text for footer for contrast */
+  font-size: 0.85em;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it's above other content */
+  transition: background-color 0.3s ease; /* Add transition for smooth theme change */
+
+  .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .status-left,
+  .status-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .status-item {
+    padding: 3px 8px;
+    margin-right: 5px;
+    background-color: var(--footer-bg-dark); /* Use CSS variable for dark theme status item background */
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    svg {
+      margin-right: 5px;
+    }
+  }
+
+  .social-link {
+    color: var(--text-color-light); /* Always white text for social links for contrast */
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+body[data-theme='light'] {
+  .footer-vscode {
+    background-color: var(--footer-bg-light);
+
+    .status-item {
+      background-color: var(--footer-bg-light);
+    }
+  }
+}
+

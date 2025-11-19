@@ -1,0 +1,95 @@
+.header-script {
+  background-color: var(--header-bg-dark) !important; /* Use CSS variable for dark theme header background */
+  border-bottom: 1px solid var(--code-block-border-dark); /* Use CSS variable for border color */
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Add transition for smooth theme change */
+
+  .navbar-brand {
+    font-weight: bold;
+    .import-keyword {
+      color: #c586c0; /* Python 'import' keyword color in VSCode */
+    }
+    .module-name {
+      color: #9cdcfe; /* Python module/variable name color in VSCode */
+    }
+  }
+
+  .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    .import-keyword {
+      color: #c586c0;
+    }
+    .from-keyword {
+      color: #c586c0;
+    }
+    .module-name {
+      color: #9cdcfe;
+    }
+
+    &:hover {
+      background-color: var(--code-block-border-dark); /* Use CSS variable for hover background */
+      color: #ffffff;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: #61dafb; /* React blue */
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28156, 220, 254, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  .search-input {
+    background-color: var(--code-block-border-dark); /* Use CSS variable for search input background */
+    border: 1px solid var(--code-block-border-dark); /* Use CSS variable for search input border */
+    color: var(--text-color-dark); /* Use CSS variable for search input text color */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Add transition */
+
+    &::placeholder {
+      color: var(--text-color-dark);
+    }
+
+    &:focus {
+      background-color: var(--code-block-bg-dark); /* Use CSS variable for focus background */
+      border-color: #007acc;
+      box-shadow: none;
+    }
+  }
+}
+
+body[data-theme='light'] {
+  .header-script {
+    background-color: var(--header-bg-light) !important;
+    border-bottom-color: var(--code-block-border-light);
+
+    .nav-link {
+      color: var(--text-color-light);
+
+      &:hover {
+        background-color: var(--code-block-border-light);
+        color: var(--text-color-dark);
+      }
+    }
+
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2851, 51, 51, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .search-input {
+      background-color: var(--code-block-bg-light);
+      border-color: var(--code-block-border-light);
+      color: var(--text-color-light);
+
+      &::placeholder {
+        color: var(--text-color-light);
+      }
+
+      &:focus {
+        background-color: var(--code-block-bg-light);
+        border-color: #007acc;
+      }
+    }
+  }
+}

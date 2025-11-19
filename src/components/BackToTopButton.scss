@@ -1,0 +1,17 @@
+.back-to-top {
+  position: fixed;
+  bottom: 80px; /* Adjust as needed, considering the footer height */
+  right: 20px;
+  z-index: 999; /* Below footer, above content */
+
+  .scroll-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    padding: 0;
+  }
+}

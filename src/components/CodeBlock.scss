@@ -1,0 +1,103 @@
+.code-block-container {
+  margin-bottom: 20px;
+
+  .code-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--code-block-border-dark);
+    padding: 5px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: var(--text-color-dark);
+    font-size: 0.8em;
+    border: 1px solid var(--code-block-border-dark);
+    border-bottom: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+
+    .code-block-language {
+      font-weight: bold;
+    }
+
+    .btn-code {
+      background-color: #007acc;
+      color: #ffffff;
+      border: none;
+      padding: 3px 8px;
+      font-size: 0.75em;
+
+      &:hover {
+        background-color: #005f99;
+      }
+    }
+  }
+
+  .code-block {
+    background-color: var(--code-block-bg-dark);
+    border: 1px solid var(--code-block-border-dark);
+    padding: 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    overflow-x: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    pre {
+      margin: 0;
+      color: var(--text-color-dark);
+      transition: color 0.3s ease;
+
+      code {
+        /* Add specific syntax highlighting styles here later if needed */
+        .comment {
+          color: #6a9955; /* VSCode green for comments */
+        }
+
+        .keyword {
+          color: #c586c0; /* VSCode purple for keywords */
+        }
+
+        .string {
+          color: #ce9178; /* VSCode orange for strings */
+        }
+
+        .function {
+          color: var(--text-color-dark); /* VSCode default code color */
+        }
+
+        .variable {
+          color: #9cdcfe; /* VSCode blue for variables */
+        }
+      }
+    }
+  }
+}
+
+body[data-theme='light'] {
+  .code-block-container {
+    .code-block-header {
+      background-color: var(--code-block-border-light);
+      border-color: var(--code-block-border-light);
+      color: var(--text-color-light);
+
+      .btn-code {
+        background-color: #007acc;
+        color: #ffffff;
+      }
+    }
+
+    .code-block {
+      background-color: var(--code-block-bg-light);
+      border-color: var(--code-block-border-light);
+
+      pre {
+        color: var(--text-color-light);
+
+        code {
+          .function {
+            color: var(--text-color-light);
+          }
+        }
+      }
+    }
+  }
+}

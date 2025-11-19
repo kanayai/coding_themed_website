@@ -1,0 +1,92 @@
+.page-content {
+  padding-top: 20px;
+  padding-bottom: 50px; /* To account for the fixed footer */
+  min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-color-dark); /* Use CSS variable for headings */
+  transition: color 0.3s ease;
+}
+
+p {
+  line-height: 1.6;
+  color: var(--text-color-dark); /* Use CSS variable for paragraphs */
+  transition: color 0.3s ease;
+}
+
+/* Specific styles for code-themed sections */
+.code-block {
+  background-color: var(--code-block-bg-dark); /* Use CSS variable for code block background */
+  border: 1px solid var(--code-block-border-dark); /* Use CSS variable for code block border */
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.code-block pre {
+  margin: 0;
+  color: var(--text-color-dark); /* Use CSS variable for code text color */
+  transition: color 0.3s ease;
+}
+
+.code-block .comment {
+  color: #6a9955; /* VSCode green for comments - constant */
+}
+
+.code-block .keyword {
+  color: #c586c0; /* VSCode purple for keywords - constant */
+}
+
+.code-block .string {
+  color: #ce9178; /* VSCode orange for strings - constant */
+}
+
+.code-block .function {
+  color: var(--text-color-dark); /* Use CSS variable for function color */
+}
+
+.code-block .variable {
+  color: #9cdcfe; /* VSCode blue for variables - constant */
+}
+
+/* Buttons with coding theme */
+.btn-code {
+  background-color: #007acc; /* VSCode blue for buttons - constant */
+  color: #ffffff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #005f99;
+  }
+}
+
+body[data-theme='light'] {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color-light);
+  }
+
+  p {
+    color: var(--text-color-light);
+  }
+
+  .code-block {
+    background-color: var(--code-block-bg-light);
+    border-color: var(--code-block-border-light);
+  }
+
+  .code-block pre {
+    color: var(--text-color-light);
+  }
+
+  .code-block .function {
+    color: var(--text-color-light);
+  }
+}
+

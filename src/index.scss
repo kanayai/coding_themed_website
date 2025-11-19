@@ -1,0 +1,89 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --background-color-dark: #282c34;
+  --text-color-dark: #abb2bf;
+  --code-block-bg-dark: #1e1e1e;
+  --code-block-border-dark: #333;
+  --header-bg-dark: #1e1e1e;
+  --footer-bg-dark: #007acc;
+  --scrollbar-track-dark: #282c34;
+  --scrollbar-thumb-dark: #555;
+  --scrollbar-thumb-hover-dark: #777;
+
+  --background-color-light: #ffffff;
+  --text-color-light: #333333;
+  --code-block-bg-light: #f3f3f3;
+  --code-block-border-light: #dddddd;
+  --header-bg-light: #f3f3f3;
+  --footer-bg-light: #007acc;
+  --scrollbar-track-light: #f1f1f1;
+  --scrollbar-thumb-light: #888;
+  --scrollbar-thumb-hover-light: #555;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-y: scroll; /* Always show scrollbar to prevent layout shifts */
+}
+
+/* Custom scrollbar for Webkit browsers */
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-dark);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-dark);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbar-track-dark);
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-dark);
+}
+
+body[data-theme='dark'] {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-dark);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-dark);
+    border-color: var(--scrollbar-track-dark);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover-dark);
+  }
+}
+
+body[data-theme='light'] {
+  background-color: var(--background-color-light);
+  color: var(--text-color-light);
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-light);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-light);
+    border-color: var(--scrollbar-track-light);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover-hover-light);
+  }
+}
+
+/* Add more global styles here if needed */
