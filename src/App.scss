@@ -9,14 +9,14 @@
   margin-left: 300px; /* ActivityBar + PrimarySideBar */
   flex-grow: 1;
   position: relative;
-  overflow-y: auto; /* Enable scrolling for main content */
+  height: 100%; /* Ensure container has full height */
 }
 
 .main-content-inner {
   padding-top: 35px; /* For TopTabsBar */
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--command-palette-height) - 35px); /* Full height minus command palette and tabs bar */
+  height: 100%; /* Full height of its parent */
 }
 
 @media (max-width: 768px) {
