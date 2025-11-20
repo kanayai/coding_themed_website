@@ -4,7 +4,7 @@
   width: calc(100% - 300px); /* Full width minus Activity Bar and Primary Sidebar */
   position: fixed;
   left: 300px;
-  top: 30px; /* Below Command Palette */
+  top: var(--command-palette-height); /* Position below Command Palette */
   z-index: 999;
   border-bottom: 1px solid var(--code-block-border-dark);
   display: flex;

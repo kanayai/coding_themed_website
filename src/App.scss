@@ -1,7 +1,8 @@
 .main-layout {
   display: flex;
-  min-height: 100vh;
-  padding-top: 30px; /* For CommandPalette */
+  height: calc(100vh - var(--command-palette-height) - var(--footer-height)); /* Explicit height calculation */
+  /* Remove min-height: 100vh as height is now explicit */
+  /* Remove padding-top as CommandPalette is fixed */
   /* padding-bottom: 50px; /* Removed for full height content */
 }
 
@@ -10,10 +11,11 @@
   flex-grow: 1;
   position: relative;
   height: 100%; /* Ensure container has full height */
+  /* overflow-y: auto; /* Content will scroll within page-content */
 }
 
 .main-content-inner {
-  padding-top: 35px; /* For TopTabsBar */
+  padding-top: 0; /* TopTabsBar is fixed, no need for padding here */
   display: flex;
   flex-direction: column;
   height: 100%; /* Full height of its parent */
