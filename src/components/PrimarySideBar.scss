@@ -30,7 +30,7 @@
     &:hover,
     &.active {
       background-color: var(--code-block-border-dark);
-      color: var(--text-color-light); /* Lighter hover color for contrast */
+      color: #ffffff; /* Use pure white for active link for better contrast */
     }
   }
 }
@@ -46,7 +46,7 @@ body[data-theme='light'] {
       &:hover,
       &.active {
         background-color: var(--code-block-border-light);
-        color: var(--text-color-dark);
+        color: #000000; /* Use pure black for active link in light mode */
       }
     }
   }
