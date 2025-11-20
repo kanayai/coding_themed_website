@@ -1,18 +1,20 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-// import About from './pages/About';
-// import Blog from './pages/Blog';
-// import Research from './pages/Research';
-// import Teaching from './pages/Teaching';
-// import Contact from './pages/Contact';
+import About from './pages/About';
+import Blog from './pages/Blog';
+import Research from './pages/Research';
+import Teaching from './pages/Teaching';
+import Contact from './pages/Contact';
 import { SearchProvider } from './context/SearchContext';
 import { ThemeProvider } from './context/ThemeContext';
 import BackToTopButton from './components/BackToTopButton';
 import ActivityBar from './components/ActivityBar';
-import PrimarySideBar from './components/PrimarySideBar'; // Uncommented
-// import TopTabsBar from './components/TopTabsBar';
-// import CommandPalette from './components/CommandPalette';
+import PrimarySideBar from './components/PrimarySideBar';
+import TopTabsBar from './components/TopTabsBar';
+import CommandPalette from './components/CommandPalette';
+
+import './App.scss'; // Import App styles
 
 function App() {
   return (
@@ -20,20 +22,20 @@ function App() {
       <ThemeProvider>
         <SearchProvider>
           {/* New VSCode-like Layout */}
-          {/* <CommandPalette /> */}
-          <div style={{ display: 'flex', minHeight: '100vh', paddingTop: '30px', paddingBottom: '50px' }}> {/* Keep paddingTop to allow for future CommandPalette */}
+          <CommandPalette />
+          <div className="main-layout">
             <ActivityBar />
-            <PrimarySideBar /> {/* Uncommented */}
-            <div style={{ marginLeft: '300px', flexGrow: 1, position: 'relative' }}> {/* Adjusted marginLeft to 300px */}
-              {/* <TopTabsBar /> */}
-              <div className="main-content" style={{ paddingTop: '0px' }}>
+            <PrimarySideBar />
+            <div className="main-content-container">
+              <TopTabsBar />
+              <div className="main-content-inner">
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  {/* <Route path="/about" element={<About />} /> */}
-                  {/* <Route path="/blog" element={<Blog />} /> */}
-                  {/* <Route path="/research" element={<Research />} /> */}
-                  {/* <Route path="/teaching" element={<Teaching />} /> */}
-                  {/* <Route path="/contact" element={<Contact />} /> */}
+                  <Route path="/about" element={<About />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/research" element={<Research />} />
+                  <Route path="/teaching" element={<Teaching />} />
+                  <Route path="/contact" element={<Contact />} />
                 </Routes>
               </div>
             </div>

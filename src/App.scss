@@ -1,0 +1,31 @@
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 30px; /* For CommandPalette */
+  padding-bottom: 50px; /* For Footer */
+}
+
+.main-content-container {
+  margin-left: 300px; /* ActivityBar + PrimarySideBar */
+  flex-grow: 1;
+  position: relative;
+}
+
+.main-content-inner {
+  padding-top: 35px; /* For TopTabsBar */
+}
+
+@media (max-width: 768px) {
+  .primary-sidebar {
+    display: none; /* Hide PrimarySideBar on mobile */
+  }
+
+  .main-content-container {
+    margin-left: 50px; /* Only ActivityBar is visible */
+  }
+
+  .top-tabs-bar {
+    width: calc(100% - 50px);
+    left: 50px;
+  }
+}
