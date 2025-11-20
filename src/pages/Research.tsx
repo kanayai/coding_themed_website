@@ -76,19 +76,26 @@ publications_df %>%
         <>
           <h2 className="mt-4">Publications (Tibble-like)</h2>
           <div className="tibble-table code-block">
-            <pre>
-              <code>
-                {`# A tibble: ${filteredPublications.length} x 6`}
-                {`
-${'date'.padEnd(15)}${'authors'.padEnd(70)}${'year'.padEnd(10)}${'title'.padEnd(50)}${'journal'.padEnd(40)}link`}
-                {`
-${'-'.repeat(14)} ${'-'.repeat(69)} ${'-'.repeat(9)} ${'-'.repeat(49)} ${'-'.repeat(39)} ${'-'.repeat(4)}`}
-                {currentPublications.map(pub =>
-                  `
-${pub.date.padEnd(15)}${pub.authors.slice(0, 68).padEnd(70)}${pub.year.padEnd(10)}${pub.title.slice(0, 48).padEnd(50)}${pub.journal.slice(0, 38).padEnd(40)}${pub.link}`
-                ).join('')}
-              </code>
-            </pre>
+            <div className="tibble-grid">
+              {/* Headers */}
+              <div className="tibble-header">date</div>
+              <div className="tibble-header">authors/title/journal</div>
+              <div className="tibble-header">year</div>
+
+              {/* Data Rows */}
+              {currentPublications.map((pub, index) => (
+                <React.Fragment key={index}>
+                  <div className="tibble-cell tibble-cell-date">{pub.date}</div>
+                  <div className="tibble-cell tibble-cell-details">
+                    <p className="tibble-cell-authors">{pub.authors}</p>
+                    <p className="tibble-cell-title"><strong>{pub.title}</strong></p>
+                    <p className="tibble-cell-journal"><em>{pub.journal}</em></p>
+                    <a href={pub.link} target="_blank" rel="noopener noreferrer">View Publication</a>
+                  </div>
+                  <div className="tibble-cell tibble-cell-year">{pub.year}</div>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
 
           {/* Pagination Controls */}

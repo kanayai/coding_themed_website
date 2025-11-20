@@ -90,3 +90,34 @@ body[data-theme='light'] {
   }
 }
 
+.tibble-grid {
+  display: grid;
+  grid-template-columns: 150px 1fr 100px; /* Date, Authors/Title/Journal, Year */
+  gap: 10px 15px;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: normal; /* Allow wrapping within cells */
+
+  .tibble-header {
+    font-weight: bold;
+    color: var(--text-color-dark);
+  }
+
+  body[data-theme='light'] & {
+    .tibble-header {
+      color: var(--text-color-light);
+    }
+  }
+
+  .tibble-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.tibble-cell-authors,
+    &.tibble-cell-title,
+    &.tibble-cell-journal {
+      white-space: normal; /* Allow wrapping for these fields */
+    }
+  }
+}
+
