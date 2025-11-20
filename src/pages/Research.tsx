@@ -16,6 +16,24 @@ interface Publication {
   link: string;
 }
 
+import React, { useState, useEffect, useMemo } from 'react'; // Import useMemo
+import { Container, Card } from 'react-bootstrap';
+import '../styles/pages.scss';
+import Papa from 'papaparse'; // Import papaparse
+import publicationsCsv from '../../data/publications.csv?raw'; // Re-add CSV import
+import { useSearch } from '../context/SearchContext';
+import { Head, Title } from 'react-head';
+import CodeBlock from '../components/CodeBlock';
+
+interface Publication {
+  date: string;
+  authors: string;
+  year: string;
+  title: string;
+  journal: string;
+  link: string;
+}
+
 const Research: React.FC = () => {
   const { searchTerm } = useSearch();
   const [allPublications, setAllPublications] = useState<Publication[]>([]);
@@ -37,6 +55,28 @@ const Research: React.FC = () => {
     (pub.authors && pub.authors.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (pub.journal && pub.journal.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  // Calculate dynamic column widths
+  const columnWidths = useMemo(() => {
+    const maxWidths = {
+      date: 'date'.length,
+      authors: 'authors'.length,
+      year: 'year'.length,
+      title: 'title'.length,
+      journal: 'journal'.length,
+      link: 'link'.length,
+    };
+
+    filteredPublications.forEach(pub => {
+      maxWidths.date = Math.max(maxWidths.date, pub.date.length);
+      maxWidths.authors = Math.max(maxWidths.authors, pub.authors.length);
+      maxWidths.year = Math.max(maxWidths.year, pub.year.length);
+      maxWidths.title = Math.max(maxWidths.title, pub.title.length);
+      maxWidths.journal = Math.max(maxWidths.journal, pub.journal.length);
+      maxWidths.link = Math.max(maxWidths.link, pub.link.length);
+    });
+    return maxWidths;
+  }, [filteredPublications]);
 
   // Pagination Logic
   const indexOfLastPublication = currentPage * publicationsPerPage;
@@ -60,7 +100,7 @@ publications_df <- read_csv("data/publications.csv")
 publications_df %>%
   arrange(desc(year)) %>%
   head(20) %>%
-  as_tibble() # Format as a Tibble
+  as_tibble() # Format as a Tibble, with dynamic column widths
 `;
   const matchesCodeBlock = searchTerm === '' || rCodeBlock.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -76,26 +116,19 @@ publications_df %>%
         <>
           <h2 className="mt-4">Publications (Tibble-like)</h2>
           <div className="tibble-table code-block">
-            <div className="tibble-grid">
-              {/* Headers */}
-              <div className="tibble-header">date</div>
-              <div className="tibble-header">authors/title/journal</div>
-              <div className="tibble-header">year</div>
-
-              {/* Data Rows */}
-              {currentPublications.map((pub, index) => (
-                <React.Fragment key={index}>
-                  <div className="tibble-cell tibble-cell-date">{pub.date}</div>
-                  <div className="tibble-cell tibble-cell-details">
-                    <p className="tibble-cell-authors">{pub.authors}</p>
-                    <p className="tibble-cell-title"><strong>{pub.title}</strong></p>
-                    <p className="tibble-cell-journal"><em>{pub.journal}</em></p>
-                    <a href={pub.link} target="_blank" rel="noopener noreferrer">View Publication</a>
-                  </div>
-                  <div className="tibble-cell tibble-cell-year">{pub.year}</div>
-                </React.Fragment>
-              ))}
-            </div>
+            <pre>
+              <code>
+                {`# A tibble: ${filteredPublications.length} x 6`}
+                {`
+${'date'.padEnd(columnWidths.date)} ${'authors'.padEnd(columnWidths.authors)} ${'year'.padEnd(columnWidths.year)} ${'title'.padEnd(columnWidths.title)} ${'journal'.padEnd(columnWidths.journal)} ${'link'.padEnd(columnWidths.link)}`}
+                {`
+${'-'.repeat(columnWidths.date)} ${'-'.repeat(columnWidths.authors)} ${'-'.repeat(columnWidths.year)} ${'-'.repeat(columnWidths.title)} ${'-'.repeat(columnWidths.journal)} ${'-'.repeat(columnWidths.link)}`}
+                {currentPublications.map(pub =>
+                  `
+${pub.date.padEnd(columnWidths.date)} ${pub.authors.padEnd(columnWidths.authors)} ${pub.year.padEnd(columnWidths.year)} ${pub.title.padEnd(columnWidths.title)} ${pub.journal.padEnd(columnWidths.journal)} ${pub.link.padEnd(columnWidths.link)}`
+                ).join('')}
+              </code>
+            </pre>
           </div>
 
           {/* Pagination Controls */}
