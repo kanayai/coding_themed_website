@@ -50,12 +50,12 @@ const Research: React.FC = () => {
       };
   
       filteredPublications.forEach(pub => {
-        maxWidths.date = Math.max(maxWidths.date, pub.date.length);
-        maxWidths.authors = Math.max(maxWidths.authors, pub.authors.length);
-        maxWidths.year = Math.max(maxWidths.year, pub.year.length);
-        maxWidths.title = Math.max(maxWidths.title, pub.title.length);
-        maxWidths.journal = Math.max(maxWidths.journal, pub.journal.length);
-        maxWidths.link = Math.max(maxWidths.link, pub.link.length);
+        maxWidths.date = Math.max(maxWidths.date, (pub.date || '').length);
+        maxWidths.authors = Math.max(maxWidths.authors, (pub.authors || '').length);
+        maxWidths.year = Math.max(maxWidths.year, (pub.year || '').length);
+        maxWidths.title = Math.max(maxWidths.title, (pub.title || '').length);
+        maxWidths.journal = Math.max(maxWidths.journal, (pub.journal || '').length);
+        maxWidths.link = Math.max(maxWidths.link, (pub.link || '').length);
       });
       // Adjust authors width to 50% of its calculated max width, with a minimum
       maxWidths.authors = Math.max(20, Math.floor(maxWidths.authors * 0.5));
@@ -108,7 +108,7 @@ ${'date'.padEnd(columnWidths.date)} ${'authors'.padEnd(columnWidths.authors)} ${
 ${'-'.repeat(columnWidths.date)} ${'-'.repeat(columnWidths.authors)} ${'-'.repeat(columnWidths.year)} ${'-'.repeat(columnWidths.title)} ${'-'.repeat(columnWidths.journal)} ${'-'.repeat(columnWidths.link)}`}
                 {currentPublications.map(pub =>
                   `
-${pub.date.padEnd(columnWidths.date)} ${pub.authors.padEnd(columnWidths.authors)} ${pub.year.padEnd(columnWidths.year)} ${pub.title.padEnd(columnWidths.title)} ${pub.journal.padEnd(columnWidths.journal)} ${pub.link.padEnd(columnWidths.link)}`
+${(pub.date || '').padEnd(columnWidths.date)} ${(pub.authors || '').padEnd(columnWidths.authors)} ${(pub.year || '').padEnd(columnWidths.year)} ${(pub.title || '').padEnd(columnWidths.title)} ${(pub.journal || '').padEnd(columnWidths.journal)} ${(pub.link || '').padEnd(columnWidths.link)}`
                 ).join('')}
               </code>
             </pre>
