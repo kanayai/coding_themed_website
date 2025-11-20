@@ -23,15 +23,18 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python' }) => {
         </Button>
       </div>
       <div className="code-block">
-        <pre>
-          <code>
-            {code.split('\\n').map((line, i) => (
-              <span key={i} className="line">
-                {line}
-              </span>
+        <div className="code-block-content">
+          <div className="line-numbers">
+            {code.split('\\n').map((_, i) => (
+              <div key={i} className="line-number">{i + 1}</div>
             ))}
-          </code>
-        </pre>
+          </div>
+          <pre>
+            <code>
+              {code}
+            </code>
+          </pre>
+        </div>
       </div>
     </div>
   );
