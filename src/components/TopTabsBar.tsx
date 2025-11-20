@@ -20,13 +20,15 @@ const TopTabsBar: React.FC = () => {
               to={tab.path}
               className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
             >
-              {tab.name}
-              <BsX className="close-tab-icon" onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                // TODO: Implement close tab logic
-                console.log('Close tab:', tab.name);
-              }} />
+              <span>
+                {tab.name}
+                <BsX className="close-tab-icon" onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  // TODO: Implement close tab logic
+                  console.log('Close tab:', tab.name);
+                }} />
+              </span>
             </NavLink>
           </Nav.Item>
         ))}
