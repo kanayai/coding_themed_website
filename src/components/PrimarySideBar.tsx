@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { NavLink } from 'react-router-dom'; // Import NavLink directly
 import {
   BsHouseDoor,      // Home
   BsInfoCircle,     // About
@@ -15,54 +15,42 @@ const PrimarySideBar: React.FC = () => {
   return (
     <div className="primary-sidebar">
       <Nav className="flex-column">
-        <LinkContainer to="/">
-          <Nav.Link className="sidebar-item" aria-label="Home">
-            <div className="d-flex align-items-center">
-              <BsHouseDoor />
-              <span className="sidebar-item-label">Home</span>
-            </div>
-          </Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/about">
-          <Nav.Link className="sidebar-item" aria-label="About">
-            <div className="d-flex align-items-center">
-              <BsInfoCircle />
-              <span className="sidebar-item-label">About</span>
-            </div>
-          </Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/blog">
-          <Nav.Link className="sidebar-item" aria-label="Blog">
-            <div className="d-flex align-items-center">
-              <BsJournalText />
-              <span className="sidebar-item-label">Blog</span>
-            </div>
-          </Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/research">
-          <Nav.Link className="sidebar-item" aria-label="Research">
-            <div className="d-flex align-items-center">
-              <BsBook />
-              <span className="sidebar-item-label">Research</span>
-            </div>
-          </Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/teaching">
-          <Nav.Link className="sidebar-item" aria-label="Teaching">
-            <div className="d-flex align-items-center">
-              <BsMortarboard />
-              <span className="sidebar-item-label">Teaching</span>
-            </div>
-          </Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/contact">
-          <Nav.Link className="sidebar-item" aria-label="Contact">
-            <div className="d-flex align-items-center">
-              <BsEnvelope />
-              <span className="sidebar-item-label">Contact</span>
-            </div>
-          </Nav.Link>
-        </LinkContainer>
+        <NavLink to="/" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Home">
+          <div className="d-flex align-items-center">
+            <BsHouseDoor />
+            <span className="sidebar-item-label">Home</span>
+          </div>
+        </NavLink>
+        <NavLink to="/about" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="About">
+          <div className="d-flex align-items-center">
+            <BsInfoCircle />
+            <span className="sidebar-item-label">About</span>
+          </div>
+        </NavLink>
+        <NavLink to="/blog" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Blog">
+          <div className="d-flex align-items-center">
+            <BsJournalText />
+            <span className="sidebar-item-label">Blog</span>
+          </div>
+        </NavLink>
+        <NavLink to="/research" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Research">
+          <div className="d-flex align-items-center">
+            <BsBook />
+            <span className="sidebar-item-label">Research</span>
+          </div>
+        </NavLink>
+        <NavLink to="/teaching" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Teaching">
+          <div className="d-flex align-items-center">
+            <BsMortarboard />
+            <span className="sidebar-item-label">Teaching</span>
+          </div>
+        </NavLink>
+        <NavLink to="/contact" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Contact">
+          <div className="d-flex align-items-center">
+            <BsEnvelope />
+            <span className="sidebar-item-label">Contact</span>
+          </div>
+        </NavLink>
       </Nav>
     </div>
   );
