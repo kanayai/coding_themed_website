@@ -9,8 +9,8 @@ import Home from './pages/Home';
 import { SearchProvider } from './context/SearchContext';
 import { ThemeProvider } from './context/ThemeContext';
 import BackToTopButton from './components/BackToTopButton';
-import ActivityBar from './components/ActivityBar'; // Uncommented
-// import PrimarySideBar from './components/PrimarySideBar';
+import ActivityBar from './components/ActivityBar';
+import PrimarySideBar from './components/PrimarySideBar'; // Uncommented
 // import TopTabsBar from './components/TopTabsBar';
 // import CommandPalette from './components/CommandPalette';
 
@@ -22,9 +22,9 @@ function App() {
           {/* New VSCode-like Layout */}
           {/* <CommandPalette /> */}
           <div style={{ display: 'flex', minHeight: '100vh', paddingTop: '30px', paddingBottom: '50px' }}> {/* Keep paddingTop to allow for future CommandPalette */}
-            <ActivityBar /> {/* Uncommented */}
-            {/* <PrimarySideBar /> */}
-            <div style={{ marginLeft: '0px', flexGrow: 1, position: 'relative' }}> {/* Removed left margin */}
+            <ActivityBar />
+            <PrimarySideBar /> {/* Uncommented */}
+            <div style={{ marginLeft: '300px', flexGrow: 1, position: 'relative' }}> {/* Adjusted marginLeft to 300px */}
               {/* <TopTabsBar /> */}
               <div className="main-content" style={{ paddingTop: '0px' }}>
                 <Routes>
