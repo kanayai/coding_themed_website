@@ -114,3 +114,5 @@ if __name__ == "__main__":
     </div>
   );
 };
+
+export default About;
