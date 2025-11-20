@@ -11,17 +11,24 @@
   border-left: 1px solid var(--code-block-border-dark); /* Divider between activity bar and primary sidebar */
   transition: background-color 0.3s ease, border-color 0.3s ease;
 
-  .sidebar-item {
+  .sidebar-item,
+  .sidebar-item-toggle {
     color: var(--text-color-dark);
     padding: 10px 15px;
     display: flex;
     align-items: center;
     font-size: 1.1em;
+    cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
 
-    svg {
+    .sidebar-arrow {
       margin-right: 10px;
-      font-size: 1.3em;
+      font-size: 0.9em;
+      transition: transform 0.2s ease;
+      &.open {
+        transform: rotate(90deg);
+      }
     }
 
     .sidebar-item-label {
@@ -34,14 +41,20 @@
       color: #ffffff; /* Use pure white for active link for better contrast */
     }
   }
+
+  .sidebar-submenu {
+    padding-left: 25px; /* Indent sub-items */
+  }
 }
 
 body[data-theme='light'] {
   .primary-sidebar {
     background-color: var(--code-block-bg-light);
     border-right-color: var(--code-block-border-light);
+    border-left-color: var(--code-block-border-light);
 
-    .sidebar-item {
+    .sidebar-item,
+    .sidebar-item-toggle {
       color: var(--text-color-light);
 
       &:hover,
