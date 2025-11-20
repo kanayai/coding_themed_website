@@ -116,6 +116,9 @@ publications_df %>%
       {(!matchesCodeBlock && filteredPublications.length === 0 && !matchesResearchProjects) && (
         <p>No matching content found on this page.</p>
       )}
-    </div>
-  );
-};
+        </div>
+      );
+    };
+    
+    export default Research;
+    
