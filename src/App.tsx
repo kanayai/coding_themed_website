@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Footer from './components/Footer';
+import Footer from './components/Footer'; // Uncommented
 import Home from './pages/Home';
 // import About from './pages/About';
 // import Blog from './pages/Blog';
@@ -8,7 +8,7 @@ import Home from './pages/Home';
 // import Contact from './pages/Contact';
 import { SearchProvider } from './context/SearchContext';
 import { ThemeProvider } from './context/ThemeContext';
-// import BackToTopButton from './components/BackToTopButton';
+import BackToTopButton from './components/BackToTopButton'; // Uncommented
 // import ActivityBar from './components/ActivityBar';
 // import PrimarySideBar from './components/PrimarySideBar';
 // import TopTabsBar from './components/TopTabsBar';
@@ -38,8 +38,8 @@ function App() {
               </div>
             </div>
           </div>
-          {/* <Footer /> */}
-          {/* <BackToTopButton /> */}
+          <Footer /> {/* Uncommented */}
+          <BackToTopButton /> {/* Uncommented */}
         </SearchProvider>
       </ThemeProvider>
     </Router>
