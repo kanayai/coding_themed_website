@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+// import { Container } from 'react-bootstrap'; // No longer needed
 import '../styles/pages.scss';
 import { useSearch } from '../context/SearchContext';
-import { Title } from 'react-head'; // Import Title from react-head
+import { Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
 
 const Contact: React.FC = () => {
@@ -29,14 +29,14 @@ socials:
   const matchesSearch = searchTerm === '' || yamlCode.toLowerCase().includes(searchTerm.toLowerCase());
 
   return (
-    <Container className="page-content">
+    <div className="page-content">
       <Title>Contact | Prof. Karim AI</Title>
       {matchesSearch ? (
         <CodeBlock code={yamlCode} language="yaml" />
       ) : (
         <p>No matching content found on this page.</p>
       )}
-    </Container>
+    </div>
   );
 };
 

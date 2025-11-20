@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+// import { Container, Row, Col, Card } from 'react-bootstrap'; // No longer needed
+import { Row, Col, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
 import anscombeQuartetContent from '../../_quarto_source/anscombe_quartet.qmd?raw'; // Import as raw string
 import { useSearch } from '../context/SearchContext';
-import { Head, Title } from 'react-head'; // Import Head and Title from react-head
+import { Head, Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
 
 interface BlogPost {
@@ -96,7 +97,7 @@ format: html
 `;
 
   return (
-    <Container className="page-content">
+    <div className="page-content">
       <Title>Blog | Prof. Karim AI</Title>
       <h1>Blog Posts</h1>
 
@@ -120,7 +121,7 @@ format: html
           <Col><p>No matching blog posts found.</p></Col>
         )}
       </Row>
-    </Container>
+    </div>
   );
 };
 

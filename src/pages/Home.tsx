@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+// import { Container } from 'react-bootstrap'; // No longer needed
 import '../styles/pages.scss';
 import { useSearch } from '../context/SearchContext';
-import { Title } from 'react-head'; // Import Title from react-head
+import { Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
 
 const Home: React.FC = () => {
@@ -28,14 +28,14 @@ if __name__ == "__main__":
   const matchesSearch = searchTerm === '' || pythonCode.toLowerCase().includes(searchTerm.toLowerCase());
 
   return (
-    <Container className="page-content">
+    <div className="page-content">
       <Title>Home | Prof. Karim AI</Title>
       {matchesSearch ? (
         <CodeBlock code={pythonCode} language="python" />
       ) : (
         <p>No matching content found on this page.</p>
       )}
-    </Container>
+    </div>
   );
 };
 
