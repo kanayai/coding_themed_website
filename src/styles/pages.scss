@@ -17,7 +17,7 @@ p {
 .code-block {
   background-color: var(--code-block-bg-dark); /* Use CSS variable for code block background */
   border: 1px solid var(--code-block-border-dark); /* Use CSS variable for code block border */
-  padding: 15px;
+  padding: 15px 0; /* Remove horizontal padding */
   border-radius: 5px;
   margin-bottom: 20px;
   overflow-x: auto;
