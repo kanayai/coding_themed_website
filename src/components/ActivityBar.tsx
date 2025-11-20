@@ -32,9 +32,7 @@ const ActivityBar: React.FC = () => {
         <NavLink to="/search-page" onClick={handleSearchClick} className="nav-link activity-bar-icon" aria-label="Search">
           <BsSearch />
         </NavLink>
-        <NavLink to="/source-control" className={({ isActive }) => (isActive ? 'nav-link activity-bar-icon active' : 'nav-link activity-bar-icon')} aria-label="Source Control">
-          <BsCodeSlash />
-        </NavLink>
+
         <NavLink to="/run-debug" className={({ isActive }) => (isActive ? 'nav-link activity-bar-icon active' : 'nav-link activity-bar-icon')} aria-label="Run and Debug">
           <BsPlayCircle />
         </NavLink>

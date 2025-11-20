@@ -1,11 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import './Footer.scss';
-
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { BsCodeSlash } from 'react-icons/bs'; // Import BsCodeSlash
 import './Footer.scss';
 
 const Footer: React.FC = () => {
@@ -13,10 +9,10 @@ const Footer: React.FC = () => {
     <footer className="footer-vscode mt-auto py-2">
       <Container fluid className="d-flex justify-content-between align-items-center">
         <div className="status-left">
+          <span className="status-item"><BsCodeSlash /> main*</span> {/* Source Control / Git Branch */}
           <span className="status-item">Ln 1, Col 1</span>
           <span className="status-item">Python</span> {/* Example Language Mode */}
           <span className="status-item">UTF-8</span>
-          <span className="status-item">main*</span> {/* Example Git branch */}
         </div>
         <div className="status-right">
           <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noopener noreferrer" className="status-item social-link">

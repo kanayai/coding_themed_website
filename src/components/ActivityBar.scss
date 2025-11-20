@@ -1,14 +1,13 @@
 .activity-bar {
   width: 50px;
   background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency with VSCode's dark theme */
-  height: 100vh;
+  height: calc(100vh - var(--footer-height, 50px)); /* Adjusted height to avoid overlapping footer */
   position: fixed;
   left: 0;
-  top: 0;
+  top: 30px; /* Space for CommandPalette */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 30px; /* Space for CommandPalette */
   z-index: 1001; /* Above primary sidebar */
   transition: background-color 0.3s ease;
 
