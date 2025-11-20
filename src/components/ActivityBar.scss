@@ -11,6 +11,19 @@
   z-index: 1001; /* Above primary sidebar */
   transition: background-color 0.3s ease;
 
+  .activity-bar-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .activity-bar-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+
   .nav-link {
     color: var(--text-color-dark);
     padding: 10px 0;
@@ -26,12 +39,6 @@
       opacity: 1;
       background-color: var(--code-block-border-dark); /* Using code-block-border-dark for consistency */
     }
-  }
-
-  .activity-bar-bottom {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 10px;
   }
 }
 
