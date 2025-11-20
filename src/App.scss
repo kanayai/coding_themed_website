@@ -14,8 +14,9 @@
   padding-top: 35px; /* For TopTabsBar */
   display: flex;
   flex-direction: column;
-  height: 100%; /* Full height of its parent */
+  height: calc(100% - var(--footer-height)); /* Full height minus footer */
   overflow-y: auto; /* Enable scrolling for the content area */
+  padding-bottom: var(--footer-height); /* Space for the footer */
 }
 
 @media (max-width: 768px) {

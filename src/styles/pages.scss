@@ -34,7 +34,6 @@ p {
   color: var(--text-color-dark);
   transition: color 0.3s ease;
   counter-reset: line;
-  padding-left: 3.5em; /* Space for line numbers */
   position: relative;
 
   code {
@@ -43,7 +42,7 @@ p {
 
   .line {
     display: block;
-    position: relative; /* Set line as relative for pseudo-element positioning */
+    position: relative;
     padding-left: 3.5em; /* Space for line numbers */
 
     &:before {
@@ -51,10 +50,9 @@ p {
       content: counter(line);
       position: absolute;
       left: 0;
-      top: 0;
-      width: 2.5em; /* Width of the line number area */
+      width: 2.5em;
       text-align: right;
-      color: #555; /* Line number color */
+      color: #555;
       padding-right: 1em;
       -webkit-user-select: none;
       -moz-user-select: none;
