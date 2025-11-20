@@ -26,6 +26,7 @@
     border-radius: 3px;
     display: flex;
     align-items: center;
+    white-space: nowrap; /* Prevent text wrapping */
 
     &:last-child {
       margin-right: 0;
@@ -52,6 +53,26 @@ body[data-theme='light'] {
 
     .status-item {
       background-color: var(--footer-bg-light);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-vscode {
+    .status-left {
+      /* Hide less important items on mobile */
+      .status-item:not(:first-child) {
+        display: none;
+      }
+    }
+    .status-right {
+      /* Hide text labels of social links on mobile to save space */
+      .social-link {
+        font-size: 1.2em; /* Make icons slightly larger */
+        .social-link-label {
+          display: none;
+        }
+      }
     }
   }
 }

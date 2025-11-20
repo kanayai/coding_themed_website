@@ -16,19 +16,19 @@ const Footer: React.FC = () => {
         </div>
         <div className="status-right">
           <a href="https://researchportal.bath.ac.uk/en/persons/karim-anaya-izquierdo/" target="_blank" rel="noopener noreferrer" className="status-item social-link">
-            UoB Profile
+            <span className="social-link-label">UoB Profile</span>
           </a>
           <a href="https://github.com/kanayai" target="_blank" rel="noopener noreferrer" className="status-item social-link">
-            <FaGithub /> GitHub
+            <FaGithub /> <span className="social-link-label">GitHub</span>
           </a>
           <a href="https://orcid.org/0000-0001-9718-5256" target="_blank" rel="noopener noreferrer" className="status-item social-link">
-            ORCID
+            <span className="social-link-label">ORCID</span>
           </a>
           <a href="www.linkedin.com/in/karim-anaya-izquierdo-b596bb2" target="_blank" rel="noopener noreferrer" className="status-item social-link">
-            <FaLinkedin /> LinkedIn
+            <FaLinkedin /> <span className="social-link-label">LinkedIn</span>
           </a>
           <a href="https://scholar.google.com/citations?user=SrcprVQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="status-item social-link">
-            Google Scholar
+            <span className="social-link-label">Google Scholar</span>
           </a>
         </div>
       </Container>
