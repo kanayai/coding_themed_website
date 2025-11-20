@@ -15,6 +15,7 @@
 .main-content-inner {
   padding-top: 35px; /* For TopTabsBar */
   margin-bottom: var(--footer-height); /* Account for fixed footer height */
+  height: 100%; /* Ensure inner content fills available height */
 }
 
 @media (max-width: 768px) {
