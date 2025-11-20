@@ -25,7 +25,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python' }) => {
       <div className="code-block">
         <pre>
           <code>
-            {code}
+            {code.split('\\n').map((line, i) => (
+              <span key={i} className="line">
+                {line}
+              </span>
+            ))}
           </code>
         </pre>
       </div>

@@ -33,6 +33,31 @@ p {
   margin: 0;
   color: var(--text-color-dark);
   transition: color 0.3s ease;
+  counter-reset: line;
+  padding-left: 3.5em; /* Space for line numbers */
+  position: relative;
+
+  code {
+    display: block;
+  }
+
+  .line {
+    display: block;
+    &:before {
+      counter-increment: line;
+      content: counter(line);
+      position: absolute;
+      left: 0;
+      width: 2.5em; /* Width of the line number area */
+      text-align: right;
+      color: #555; /* Line number color */
+      padding-right: 1em;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  }
 }
 
 .code-block .comment {
