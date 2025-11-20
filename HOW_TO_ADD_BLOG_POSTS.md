@@ -20,14 +20,14 @@ Navigate to `_quarto_source` and create a new file with a `.qmd` extension (e.g.
 
 ### 2. Write Your Post with Frontmatter
 
-At the top of your new `.qmd` file, you must include a "frontmatter" section. This is where you define the post's metadata.
+At the top of your new `.qmd` file, you must include a "frontmatter" section. This is crucial for defining the post's metadata, which will be used to generate the clickable blog cards on the website.
 
 ```yaml
 ---
 title: "My Awesome Post Title"
 date: "2025-11-15"
-description: "This is a short summary of the post that will appear in the blog list."
-keywords: ["quarto", "r", "python", "tutorial"]
+description: "This is a short summary of the post that will appear in the blog list and on the card."
+categories: ["tutorial", "python"] # Use categories for better filtering
 ---
 
 ## Your Post Content Starts Here
@@ -46,11 +46,8 @@ When you include images, the script will handle the paths for you, so you can us
 
 *   `title`: The title of your blog post.
 *   `date`: The publication date in `YYYY-MM-DD` format.
-*   `description`: A short excerpt or summary of your post.
-
-**Optional Frontmatter Fields:**
-
-*   `keywords`: A list of tags for your post.
+*   `description`: A short excerpt or summary of your post, used for the blog card.
+*   `categories`: A list of categories for your post, used for filtering and organization.
 
 ### 3. Run the Publish Script
 

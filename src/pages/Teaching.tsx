@@ -11,6 +11,7 @@ const Teaching: React.FC = () => {
 \\documentclass{article}
 \\usepackage{amsmath}
 \\usepackage{geometry}
+\\usepackage{graphicx}
 
 \\begin{document}
 

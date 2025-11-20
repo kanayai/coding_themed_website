@@ -1,0 +1,89 @@
+.top-tabs-bar {
+  height: 35px;
+  background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency */
+  width: calc(100% - 300px); /* Full width minus Activity Bar and Primary Sidebar */
+  position: fixed;
+  left: 300px;
+  top: 30px; /* Below Command Palette */
+  z-index: 999;
+  border-bottom: 1px solid var(--code-block-border-dark);
+  display: flex;
+  align-items: flex-end; /* Align tabs to the bottom of the bar */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  .nav-tabs {
+    border-bottom: none; /* Remove default Bootstrap bottom border */
+    display: flex;
+    height: 100%; /* Make Nav take full height for alignment */
+    align-items: flex-end; /* Align tab items to the bottom */
+  }
+
+  .nav-item {
+    height: 100%;
+    margin-bottom: 0; /* Remove default Bootstrap margin */
+
+    .nav-link {
+      background-color: var(--code-block-bg-dark); /* Inactive tab background */
+      color: var(--text-color-dark);
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-top-left-radius: 0.25rem;
+      border-top-right-radius: 0.25rem;
+      padding: 5px 15px;
+      height: 100%;
+      display: flex;
+      align-items: center; /* Center content vertically */
+      position: relative;
+      top: 1px; /* Overlap the bottom border slightly */
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &.active {
+        background-color: var(--background-color-dark); /* Active tab background */
+        color: var(--text-color-light); /* Lighter text for active tab */
+        border-color: var(--code-block-border-dark);
+        border-bottom-color: var(--background-color-dark); /* To blend with editor area */
+      }
+
+      &:hover:not(.active) {
+        background-color: var(--code-block-border-dark);
+        color: var(--text-color-light);
+      }
+
+      .close-tab-icon {
+        margin-left: 10px;
+        cursor: pointer;
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+body[data-theme='light'] {
+  .top-tabs-bar {
+    background-color: var(--code-block-bg-light);
+    border-bottom-color: var(--code-block-border-light);
+
+    .nav-item {
+      .nav-link {
+        background-color: var(--code-block-bg-light);
+        color: var(--text-color-light);
+
+        &.active {
+          background-color: var(--background-color-light);
+          color: var(--text-color-dark);
+          border-color: var(--code-block-border-light);
+          border-bottom-color: var(--background-color-light);
+        }
+
+        &:hover:not(.active) {
+          background-color: var(--code-block-border-light);
+          color: var(--text-color-dark);
+        }
+      }
+    }
+  }
+}

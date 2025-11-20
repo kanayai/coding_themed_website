@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -10,21 +9,36 @@ import Contact from './pages/Contact';
 import { SearchProvider } from './context/SearchContext';
 import { ThemeProvider } from './context/ThemeContext';
 import BackToTopButton from './components/BackToTopButton';
+import ActivityBar from './components/ActivityBar';
+import PrimarySideBar from './components/PrimarySideBar';
+import TopTabsBar from './components/TopTabsBar'; // Import actual TopTabsBar
+
+import CommandPalette from './components/CommandPalette'; // Import actual CommandPalette
 
 function App() {
   return (
     <Router>
       <ThemeProvider>
         <SearchProvider>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/research" element={<Research />} />
-            <Route path="/teaching" element={<Teaching />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+          {/* New VSCode-like Layout */}
+          <CommandPalette /> {/* Render CommandPalette at the very top */}
+          <div style={{ display: 'flex', minHeight: '100vh', paddingTop: '30px', paddingBottom: '50px' }}>
+            <ActivityBar />
+            <PrimarySideBar />
+            <div style={{ marginLeft: '300px', flexGrow: 1, position: 'relative' }}>
+              <TopTabsBar />
+              <div className="main-content" style={{ paddingTop: '0px' }}> {/* Adjusted paddingTop to 0px */}
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/research" element={<Research />} />
+                  <Route path="/teaching" element={<Teaching />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </div>
+            </div>
+          </div>
           <Footer />
           <BackToTopButton />
         </SearchProvider>

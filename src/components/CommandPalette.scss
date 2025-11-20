@@ -1,0 +1,86 @@
+.command-palette {
+  height: 30px;
+  background-color: var(--code-block-bg-dark); /* VSCode Title Bar background */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1002; /* Highest z-index */
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  transition: background-color 0.3s ease;
+
+  .window-controls {
+    display: flex;
+    margin-right: 15px; /* Space between controls and input */
+
+    .control-button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+      cursor: pointer;
+
+      &.close {
+        background-color: #ff605c; /* Red */
+      }
+      &.minimize {
+        background-color: #ffbd44; /* Yellow */
+      }
+      &.maximize {
+        background-color: #00ca4e; /* Green */
+      }
+    }
+  }
+
+  .command-input-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center; /* Center the input within its container */
+  }
+
+  .command-input {
+    width: 60%; /* Adjust width as needed */
+    padding: 3px 10px;
+    border: 1px solid var(--code-block-border-dark);
+    border-radius: 5px;
+    background-color: var(--code-block-border-dark); /* VSCode Quick Open input background */
+    color: var(--text-color-dark);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    outline: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+
+    &::placeholder {
+      color: var(--text-color-dark);
+    }
+
+    &:focus {
+      border-color: #007acc; /* Highlight on focus */
+      background-color: var(--code-block-bg-dark);
+    }
+  }
+}
+
+body[data-theme='light'] {
+  .command-palette {
+    background-color: var(--code-block-bg-light);
+    border-bottom: 1px solid var(--code-block-border-light);
+
+    .command-input {
+      background-color: var(--code-block-border-light);
+      border-color: var(--code-block-border-light);
+      color: var(--text-color-light);
+
+      &::placeholder {
+        color: var(--text-color-light);
+      }
+
+      &:focus {
+        border-color: #007acc;
+        background-color: var(--code-block-bg-light);
+      }
+    }
+  }
+}

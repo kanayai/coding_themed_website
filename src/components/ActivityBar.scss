@@ -1,0 +1,52 @@
+.activity-bar {
+  width: 50px;
+  background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency with VSCode's dark theme */
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 30px; /* Space for CommandPalette */
+  z-index: 1001; /* Above primary sidebar */
+  transition: background-color 0.3s ease;
+
+  .nav-link {
+    color: var(--text-color-dark);
+    padding: 10px 0;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, background-color 0.2s ease, color 0.3s ease;
+
+    &:hover,
+    &.active {
+      opacity: 1;
+      background-color: var(--code-block-border-dark); /* Using code-block-border-dark for consistency */
+    }
+  }
+
+  .activity-bar-bottom {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+}
+
+body[data-theme='light'] {
+  .activity-bar {
+    background-color: var(--code-block-bg-light);
+
+    .nav-link {
+      color: var(--text-color-light);
+
+      &:hover,
+      &.active {
+        background-color: var(--code-block-border-light);
+      }
+    }
+  }
+}

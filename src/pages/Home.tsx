@@ -7,19 +7,22 @@ import CodeBlock from '../components/CodeBlock';
 
 const Home: React.FC = () => {
   const { searchTerm } = useSearch();
-  const pythonCode = `
-# Welcome to my academic website
-"""
-This website is a showcase of my academic work, including research, teaching, and blog posts.
-It is designed to look and feel like a code editor.
-Enjoy your stay!
-"""
+  const pythonCode = `import os
+import sys
 
-def hello_world():
+# Welcome to Prof. Karim AI's Academic Website
+# Explore my research, teaching, and blog.
+# This website is built to mimic a VSCode environment.
+
+def get_welcome_message():
+    """
+    Returns a personalized welcome message.
+    """
     return "Hello, welcome to my digital space!"
 
-message = hello_world()
-print(message)
+if __name__ == "__main__":
+    message = get_welcome_message()
+    print(message)
 `;
 
   const matchesSearch = searchTerm === '' || pythonCode.toLowerCase().includes(searchTerm.toLowerCase());
