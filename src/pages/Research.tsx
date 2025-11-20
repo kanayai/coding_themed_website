@@ -47,15 +47,9 @@ const Research: React.FC = () => {
 
   const researchProjectsContent = "Information about research projects will be added here soon.";
   const matchesResearchProjects = searchTerm === '' || researchProjectsContent.toLowerCase().includes(searchTerm.toLowerCase());
-  const rCodeBlock = `
-# Load necessary libraries
-library("tidyverse")
-library("readr") # For read_csv
-
-# Load publications data from CSV
+  const rCodeBlock = `library("tidyverse")
+library("readr")
 publications_df <- read_csv("data/publications.csv")
-
-# Display recent publications (first 20 entries)
 publications_df %>%
   arrange(desc(year)) %>%
   head(20) %>%

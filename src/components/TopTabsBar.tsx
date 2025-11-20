@@ -1,7 +1,12 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { BsX } from 'react-icons/bs';
+import {
+  BsX,
+  BsLayoutSplit,
+  BsLayoutSidebar,
+  BsLayoutSidebarReverse
+} from 'react-icons/bs';
 import './TopTabsBar.scss';
 
 // Temporary static list of open tabs
@@ -33,6 +38,11 @@ const TopTabsBar: React.FC = () => {
           </Nav.Item>
         ))}
       </Nav>
+      <div className="layout-icons">
+        <BsLayoutSplit />
+        <BsLayoutSidebar />
+        <BsLayoutSidebarReverse />
+      </div>
     </div>
   );
 };

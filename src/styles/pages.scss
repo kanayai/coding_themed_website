@@ -90,7 +90,7 @@ body[data-theme='light'] {
 
 .tibble-grid-fixed {
   display: grid;
-  grid-template-columns: 80px 300px 1fr 150px 200px; /* year, authors, title, journal, link */
+  grid-template-columns: 80px 300px 1fr 300px 200px; /* year, authors, title, journal, link */
   gap: 5px 15px;
   font-family: 'JetBrains Mono', monospace;
 

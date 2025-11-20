@@ -87,3 +87,22 @@ body[data-theme='light'] {
     }
   }
 }
+
+.layout-icons {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push to the far right */
+  padding-right: 15px;
+
+  svg {
+    font-size: 1.2em;
+    margin-left: 10px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
