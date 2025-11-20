@@ -90,5 +90,29 @@ body[data-theme='light'] {
   }
 }
 
+.tibble-grid-fixed {
+  display: grid;
+  grid-template-columns: 80px 300px 1fr 150px 200px; /* year, authors, title, journal, link */
+  gap: 5px 15px;
+  font-family: 'JetBrains Mono', monospace;
+
+  a.tibble-row-link {
+    display: contents; /* Make the 'a' tag behave like a grid row */
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .tibble-header {
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .tibble-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 
 
