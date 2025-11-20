@@ -2,17 +2,19 @@
   display: flex;
   min-height: 100vh;
   padding-top: 30px; /* For CommandPalette */
-  padding-bottom: 50px; /* For Footer */
+  /* padding-bottom: 50px; /* Removed for full height content */
 }
 
 .main-content-container {
   margin-left: 300px; /* ActivityBar + PrimarySideBar */
   flex-grow: 1;
   position: relative;
+  overflow-y: auto; /* Enable scrolling for main content */
 }
 
 .main-content-inner {
   padding-top: 35px; /* For TopTabsBar */
+  margin-bottom: var(--footer-height); /* Account for fixed footer height */
 }
 
 @media (max-width: 768px) {
