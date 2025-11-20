@@ -1,7 +1,5 @@
 .page-content {
-  padding-top: 20px;
-  padding-bottom: 50px; /* To account for the fixed footer */
-  min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+  padding: 15px; /* Add some padding to the content area */
 }
 
 h1, h2, h3, h4, h5, h6 {
