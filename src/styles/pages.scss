@@ -1,32 +1,37 @@
 .page-content {
-  /* Padding is now handled by the main layout or individual components */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Fill the height of the container */
+}
+
+.code-block {
+  background-color: var(--code-block-bg-dark);
+  border: 1px solid var(--code-block-border-dark);
+  padding: 15px; /* Re-add padding for content inside the block */
+  border-radius: 5px;
+  margin-bottom: 0; /* Remove margin as it's now handled by flex */
+  overflow-x: auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-grow: 1; /* Allow the code block to fill available space */
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--text-color-dark); /* Use CSS variable for headings */
+  color: var(--text-color-dark);
   transition: color 0.3s ease;
+  padding: 0 15px; /* Add horizontal padding to headings */
 }
 
 p {
   line-height: 1.6;
-  color: var(--text-color-dark); /* Use CSS variable for paragraphs */
+  color: var(--text-color-dark);
   transition: color 0.3s ease;
+  padding: 0 15px; /* Add horizontal padding to paragraphs */
 }
 
 /* Specific styles for code-themed sections */
-.code-block {
-  background-color: var(--code-block-bg-dark); /* Use CSS variable for code block background */
-  border: 1px solid var(--code-block-border-dark); /* Use CSS variable for code block border */
-  padding: 15px 0; /* Remove horizontal padding */
-  border-radius: 5px;
-  margin-bottom: 20px;
-  overflow-x: auto;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
 .code-block pre {
   margin: 0;
-  color: var(--text-color-dark); /* Use CSS variable for code text color */
+  color: var(--text-color-dark);
   transition: color 0.3s ease;
 }
 
