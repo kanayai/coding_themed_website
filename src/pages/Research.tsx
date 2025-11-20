@@ -1,21 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Card } from 'react-bootstrap';
-import '../styles/pages.scss';
-import Papa from 'papaparse'; // Import papaparse
-import publicationsCsv from '../../data/publications.csv?raw'; // Re-add CSV import
-import { useSearch } from '../context/SearchContext';
-import { Head, Title } from 'react-head';
-import CodeBlock from '../components/CodeBlock';
-
-interface Publication {
-  date: string;
-  authors: string;
-  year: string;
-  title: string;
-  journal: string;
-  link: string;
-}
-
 import React, { useState, useEffect, useMemo } from 'react'; // Import useMemo
 import { Container, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
@@ -57,27 +39,28 @@ const Research: React.FC = () => {
   );
 
   // Calculate dynamic column widths
-  const columnWidths = useMemo(() => {
-    const maxWidths = {
-      date: 'date'.length,
-      authors: 'authors'.length,
-      year: 'year'.length,
-      title: 'title'.length,
-      journal: 'journal'.length,
-      link: 'link'.length,
-    };
-
-    filteredPublications.forEach(pub => {
-      maxWidths.date = Math.max(maxWidths.date, pub.date.length);
-      maxWidths.authors = Math.max(maxWidths.authors, pub.authors.length);
-      maxWidths.year = Math.max(maxWidths.year, pub.year.length);
-      maxWidths.title = Math.max(maxWidths.title, pub.title.length);
-      maxWidths.journal = Math.max(maxWidths.journal, pub.journal.length);
-      maxWidths.link = Math.max(maxWidths.link, pub.link.length);
-    });
-    return maxWidths;
-  }, [filteredPublications]);
-
+      const columnWidths = useMemo(() => {
+      const maxWidths = {
+        date: 'date'.length,
+        authors: 'authors'.length,
+        year: 'year'.length,
+        title: 'title'.length,
+        journal: 'journal'.length,
+        link: 'link'.length,
+      };
+  
+      filteredPublications.forEach(pub => {
+        maxWidths.date = Math.max(maxWidths.date, pub.date.length);
+        maxWidths.authors = Math.max(maxWidths.authors, pub.authors.length);
+        maxWidths.year = Math.max(maxWidths.year, pub.year.length);
+        maxWidths.title = Math.max(maxWidths.title, pub.title.length);
+        maxWidths.journal = Math.max(maxWidths.journal, pub.journal.length);
+        maxWidths.link = Math.max(maxWidths.link, pub.link.length);
+      });
+      // Adjust authors width to 50% of its calculated max width, with a minimum
+      maxWidths.authors = Math.max(20, Math.floor(maxWidths.authors * 0.5));
+      return maxWidths;
+    }, [filteredPublications]);
   // Pagination Logic
   const indexOfLastPublication = currentPage * publicationsPerPage;
   const indexOfFirstPublication = indexOfLastPublication - publicationsPerPage;
@@ -115,7 +98,7 @@ publications_df %>%
       {(filteredPublications.length > 0 || searchTerm === '') && (
         <>
           <h2 className="mt-4">Publications (Tibble-like)</h2>
-          <div className="tibble-table code-block">
+          <div className="tibble-table code-block" style={{ overflowX: 'auto' }}>
             <pre>
               <code>
                 {`# A tibble: ${filteredPublications.length} x 6`}
