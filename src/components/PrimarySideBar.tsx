@@ -17,38 +17,50 @@ const PrimarySideBar: React.FC = () => {
       <Nav className="flex-column">
         <LinkContainer to="/">
           <Nav.Link className="sidebar-item" aria-label="Home">
-            <BsHouseDoor />
-            <span className="sidebar-item-label">Home</span>
+            <div className="d-flex align-items-center">
+              <BsHouseDoor />
+              <span className="sidebar-item-label">Home</span>
+            </div>
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to="/about">
           <Nav.Link className="sidebar-item" aria-label="About">
-            <BsInfoCircle />
-            <span className="sidebar-item-label">About</span>
+            <div className="d-flex align-items-center">
+              <BsInfoCircle />
+              <span className="sidebar-item-label">About</span>
+            </div>
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to="/blog">
           <Nav.Link className="sidebar-item" aria-label="Blog">
-            <BsJournalText />
-            <span className="sidebar-item-label">Blog</span>
+            <div className="d-flex align-items-center">
+              <BsJournalText />
+              <span className="sidebar-item-label">Blog</span>
+            </div>
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to="/research">
           <Nav.Link className="sidebar-item" aria-label="Research">
-            <BsBook />
-            <span className="sidebar-item-label">Research</span>
+            <div className="d-flex align-items-center">
+              <BsBook />
+              <span className="sidebar-item-label">Research</span>
+            </div>
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to="/teaching">
           <Nav.Link className="sidebar-item" aria-label="Teaching">
-            <Bs mortarboard />
-            <span className="sidebar-item-label">Teaching</span>
+            <div className="d-flex align-items-center">
+              <BsMortarboard />
+              <span className="sidebar-item-label">Teaching</span>
+            </div>
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to="/contact">
           <Nav.Link className="sidebar-item" aria-label="Contact">
-            <BsEnvelope />
-            <span className="sidebar-item-label">Contact</span>
+            <div className="d-flex align-items-center">
+              <BsEnvelope />
+              <span className="sidebar-item-label">Contact</span>
+            </div>
           </Nav.Link>
         </LinkContainer>
       </Nav>
