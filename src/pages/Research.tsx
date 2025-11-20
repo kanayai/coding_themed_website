@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
-import publicationsCsv from '../../data/publications.csv?raw'; // Import as raw string
+import Papa from 'papaparse'; // Import papaparse
 import { useSearch } from '../context/SearchContext';
-import { Head, Title } from 'react-head'; // Import Head and Title from react-head
+import { Head, Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
 
 interface Publication {
@@ -15,31 +15,6 @@ interface Publication {
   link: string;
 }
 
-const parseCsv = (csvString: string): Publication[] => {
-  const lines = csvString.trim().split('\\n');
-  if (lines.length === 0) return [];
-
-  const headers = lines[0].split(',');
-  const publications: Publication[] = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const values = lines[i].split(',');
-    if (values.length === headers.length) {
-      // Basic parsing, assumes no commas within fields or proper escaping
-      // For more robust parsing, a dedicated CSV library would be better
-      publications.push({
-        date: values[0].replace(/"/g, ''),
-        authors: values[1].replace(/"/g, ''),
-        year: values[2].replace(/"/g, ''),
-        title: values[3].replace(/"/g, ''),
-        journal: values[4].replace(/"/g, ''),
-        link: values[5].replace(/"/g, ''),
-      });
-    }
-  }
-  return publications;
-};
-
 const Research: React.FC = () => {
   const { searchTerm } = useSearch();
   const [allPublications, setAllPublications] = useState<Publication[]>([]);
@@ -47,8 +22,13 @@ const Research: React.FC = () => {
   const publicationsPerPage = 20;
 
   useEffect(() => {
-    const parsedPublications = parseCsv(publicationsCsv);
-    setAllPublications(parsedPublications);
+    Papa.parse(publicationsCsv, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        setAllPublications(results.data as Publication[]);
+      },
+    });
   }, []);
 
   const filteredPublications = allPublications.filter(pub =>

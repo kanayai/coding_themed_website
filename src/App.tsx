@@ -16,6 +16,8 @@ import CommandPalette from './components/CommandPalette';
 
 import './App.scss'; // Import App styles
 
+import BlogPostPage from './pages/BlogPostPage'; // Import BlogPostPage
+
 function App() {
   return (
     <Router>
@@ -33,6 +35,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:postId" element={<BlogPostPage />} /> {/* New route for individual posts */}
                   <Route path="/research" element={<Research />} />
                   <Route path="/teaching" element={<Teaching />} />
                   <Route path="/contact" element={<Contact />} />
