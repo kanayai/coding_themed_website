@@ -14,8 +14,9 @@
 
 .main-content-inner {
   padding-top: 35px; /* For TopTabsBar */
-  margin-bottom: var(--footer-height); /* Account for fixed footer height */
-  height: 100%; /* Ensure inner content fills available height */
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--command-palette-height) - 35px); /* Full height minus command palette and tabs bar */
 }
 
 @media (max-width: 768px) {
