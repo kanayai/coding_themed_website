@@ -9,7 +9,8 @@
   display: flex;
   align-items: center;
   padding: 0 10px;
-  transition: background-color 0.3s ease;
+  border-bottom: 1px solid var(--code-block-border-dark); /* Divider below command palette */
+  transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
 
   .window-controls {
     display: flex;
