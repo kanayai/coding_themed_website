@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
 import Papa from 'papaparse'; // Import papaparse
+import publicationsCsv from '../../data/publications.csv?raw'; // Re-add CSV import
 import { useSearch } from '../context/SearchContext';
 import { Head, Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
@@ -32,9 +33,9 @@ const Research: React.FC = () => {
   }, []);
 
   const filteredPublications = allPublications.filter(pub =>
-    pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pub.authors.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pub.journal.toLowerCase().includes(searchTerm.toLowerCase())
+    (pub.title && pub.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (pub.authors && pub.authors.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (pub.journal && pub.journal.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Pagination Logic
