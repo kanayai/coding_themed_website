@@ -6,7 +6,7 @@ import {
   BsInfoCircle,     // About
   BsJournalText,    // Blog
   BsBook,           // Research
-  Bs mortarboard, // Teaching
+  BsMortarboard, // Teaching
   BsEnvelope,       // Contact
 } from 'react-icons/bs';
 import './PrimarySideBar.scss';
