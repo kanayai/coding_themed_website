@@ -18,6 +18,7 @@ import './App.scss'; // Import App styles
 
 import ResearchProjectsPage from './pages/ResearchProjectsPage'; // Import ResearchProjectsPage
 import PublicationsPage from './pages/PublicationsPage'; // Import PublicationsPage
+import BlogPostPage from './pages/BlogPostPage'; // Import BlogPostPage
 
 function App() {
   return (
