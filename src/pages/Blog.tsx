@@ -3,7 +3,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
 import anscombeQuartetContent from '../../_quarto_source/anscombe_quartet.qmd?raw'; // Import as raw string
 import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
+import { Head, Title } from 'react-head'; // Import Head and Title from react-head
 import CodeBlock from '../components/CodeBlock';
 
 interface BlogPost {
@@ -14,9 +14,10 @@ interface BlogPost {
   language: string;
 }
 
+const qmdHeaderRegex = /---\s*([\s\S]*?)\s*---/; // Define the regex here
+
 // Function to parse YAML header from QMD content
 const parseQmdHeader = (qmdContent: string) => {
-  const yamlRegex = /---\s*([\s\S]*?)\s*---/;
   const match = qmdHeaderRegex.exec(qmdContent);
   if (match && match[1]) {
     const yamlString = match[1];
@@ -96,9 +97,7 @@ format: html
 
   return (
     <Container className="page-content">
-      <Helmet>
-        <title>Blog | Prof. Karim AI</title>
-      </Helmet>
+      <Title>Blog | Prof. Karim AI</Title>
       <h1>Blog Posts</h1>
 
       <CodeBlock code={blogYamlHeader} language="yaml" />

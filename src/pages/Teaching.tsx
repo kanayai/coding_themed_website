@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import '../styles/pages.scss';
 import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
+import { Title } from 'react-head'; // Import Title from react-head
 import CodeBlock from '../components/CodeBlock';
 
 const Teaching: React.FC = () => {
@@ -35,9 +35,7 @@ Information about past courses will be available here soon.
 
   return (
     <Container className="page-content">
-      <Helmet>
-        <title>Teaching | Prof. Karim AI</title>
-      </Helmet>
+      <Title>Teaching | Prof. Karim AI</Title>
       {matchesSearch ? (
         <CodeBlock code={latexCode} language="latex" />
       ) : (

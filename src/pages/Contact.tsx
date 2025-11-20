@@ -2,14 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import '../styles/pages.scss';
 import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
-import CodeBlock from '../components/CodeBlock';
-
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import '../styles/pages.scss';
-import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
+import { Title } from 'react-head'; // Import Title from react-head
 import CodeBlock from '../components/CodeBlock';
 
 const Contact: React.FC = () => {
@@ -37,9 +30,7 @@ socials:
 
   return (
     <Container className="page-content">
-      <Helmet>
-        <title>Contact | Prof. Karim AI</title>
-      </Helmet>
+      <Title>Contact | Prof. Karim AI</Title>
       {matchesSearch ? (
         <CodeBlock code={yamlCode} language="yaml" />
       ) : (

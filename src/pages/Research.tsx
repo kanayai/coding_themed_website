@@ -3,7 +3,7 @@ import { Container, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
 import publicationsCsv from '../../data/publications.csv?raw'; // Import as raw string
 import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
+import { Head, Title } from 'react-head'; // Import Head and Title from react-head
 import CodeBlock from '../components/CodeBlock';
 
 interface Publication {
@@ -86,9 +86,7 @@ publications_df %>%
 
   return (
     <Container className="page-content">
-      <Helmet>
-        <title>Research | Prof. Karim AI</title>
-      </Helmet>
+      <Title>Research | Prof. Karim AI</Title>
       {matchesCodeBlock && (
         <CodeBlock code={rCodeBlock} language="r" />
       )}

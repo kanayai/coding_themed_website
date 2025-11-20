@@ -2,16 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import '../styles/pages.scss';
 import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
-import CodeBlock from '../components/CodeBlock';
-
-const About: React.FC = () => {
-  const { searchTerm } = useSearch();
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import '../styles/pages.scss';
-import { useSearch } from '../context/SearchContext';
-import { Helmet } from 'react-helmet-async';
+import { Title } from 'react-head'; // Import Title from react-head
 import CodeBlock from '../components/CodeBlock';
 
 const About: React.FC = () => {
@@ -114,9 +105,7 @@ if __name__ == "__main__":
 
   return (
     <Container className="page-content">
-      <Helmet>
-        <title>About | Prof. Karim AI</title>
-      </Helmet>
+      <Title>About | Prof. Karim AI</Title>
       {matchesSearch ? (
         <CodeBlock code={pythonCode} language="python" />
       ) : (
