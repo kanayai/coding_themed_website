@@ -1,13 +1,14 @@
 .primary-sidebar {
   width: 250px;
   background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency */
-  height: 100vh;
+  height: calc(100vh - var(--command-palette-height)); /* Extend to footer */
   position: fixed;
   left: 50px; /* Right next to Activity Bar */
-  top: 0;
-  padding-top: 30px; /* To align with Command Palette */
+  top: var(--command-palette-height); /* Position below Command Palette */
+  padding-top: 0; /* No need for padding-top here as top is set */
   z-index: 1000;
   border-right: 1px solid var(--code-block-border-dark);
+  border-left: 1px solid var(--code-block-border-dark); /* Divider between activity bar and primary sidebar */
   transition: background-color 0.3s ease, border-color 0.3s ease;
 
   .sidebar-item {
