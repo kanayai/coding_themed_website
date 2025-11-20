@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Footer from './components/Footer'; // Uncommented
+import Footer from './components/Footer';
 import Home from './pages/Home';
 // import About from './pages/About';
 // import Blog from './pages/Blog';
@@ -8,8 +8,8 @@ import Home from './pages/Home';
 // import Contact from './pages/Contact';
 import { SearchProvider } from './context/SearchContext';
 import { ThemeProvider } from './context/ThemeContext';
-import BackToTopButton from './components/BackToTopButton'; // Uncommented
-// import ActivityBar from './components/ActivityBar';
+import BackToTopButton from './components/BackToTopButton';
+import ActivityBar from './components/ActivityBar'; // Uncommented
 // import PrimarySideBar from './components/PrimarySideBar';
 // import TopTabsBar from './components/TopTabsBar';
 // import CommandPalette from './components/CommandPalette';
@@ -21,8 +21,8 @@ function App() {
         <SearchProvider>
           {/* New VSCode-like Layout */}
           {/* <CommandPalette /> */}
-          <div style={{ display: 'flex', minHeight: '100vh', paddingTop: '30px', paddingBottom: '50px' }}>
-            {/* <ActivityBar /> */}
+          <div style={{ display: 'flex', minHeight: '100vh', paddingTop: '30px', paddingBottom: '50px' }}> {/* Keep paddingTop to allow for future CommandPalette */}
+            <ActivityBar /> {/* Uncommented */}
             {/* <PrimarySideBar /> */}
             <div style={{ marginLeft: '0px', flexGrow: 1, position: 'relative' }}> {/* Removed left margin */}
               {/* <TopTabsBar /> */}
@@ -38,8 +38,8 @@ function App() {
               </div>
             </div>
           </div>
-          <Footer /> {/* Uncommented */}
-          <BackToTopButton /> {/* Uncommented */}
+          <Footer />
+          <BackToTopButton />
         </SearchProvider>
       </ThemeProvider>
     </Router>
