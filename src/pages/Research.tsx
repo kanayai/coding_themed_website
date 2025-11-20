@@ -8,7 +8,6 @@ import { Head, Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
 
 interface Publication {
-  date: string;
   authors: string;
   year: string;
   title: string;
@@ -39,28 +38,26 @@ const Research: React.FC = () => {
   );
 
   // Calculate dynamic column widths
-      const columnWidths = useMemo(() => {
-      const maxWidths = {
-        date: 'date'.length,
-        authors: 'authors'.length,
-        year: 'year'.length,
-        title: 'title'.length,
-        journal: 'journal'.length,
-        link: 'link'.length,
-      };
-  
-      filteredPublications.forEach(pub => {
-        maxWidths.date = Math.max(maxWidths.date, (pub.date || '').length);
-        maxWidths.authors = Math.max(maxWidths.authors, (pub.authors || '').length);
-        maxWidths.year = Math.max(maxWidths.year, (pub.year || '').length);
-        maxWidths.title = Math.max(maxWidths.title, (pub.title || '').length);
-        maxWidths.journal = Math.max(maxWidths.journal, (pub.journal || '').length);
-        maxWidths.link = Math.max(maxWidths.link, (pub.link || '').length);
-      });
-      // Adjust authors width to 50% of its calculated max width, with a minimum
-      maxWidths.authors = Math.max(20, Math.floor(maxWidths.authors * 0.5));
-      return maxWidths;
-    }, [filteredPublications]);
+  const columnWidths = useMemo(() => {
+    const maxWidths = {
+      authors: 'authors'.length,
+      year: 'year'.length,
+      title: 'title'.length,
+      journal: 'journal'.length,
+      link: 'link'.length,
+    };
+
+    filteredPublications.forEach(pub => {
+      maxWidths.authors = Math.max(maxWidths.authors, (pub.authors || '').length);
+      maxWidths.year = Math.max(maxWidths.year, (pub.year || '').length);
+      maxWidths.title = Math.max(maxWidths.title, (pub.title || '').length);
+      maxWidths.journal = Math.max(maxWidths.journal, (pub.journal || '').length);
+      maxWidths.link = Math.max(maxWidths.link, (pub.link || '').length);
+    });
+    // Adjust authors width to 50% of its calculated max width, with a minimum
+    maxWidths.authors = Math.max(20, Math.floor(maxWidths.authors * 0.5));
+    return maxWidths;
+  }, [filteredPublications]);
   // Pagination Logic
   const indexOfLastPublication = currentPage * publicationsPerPage;
   const indexOfFirstPublication = indexOfLastPublication - publicationsPerPage;
@@ -101,14 +98,14 @@ publications_df %>%
           <div className="tibble-table code-block" style={{ overflowX: 'auto' }}>
             <pre>
               <code>
-                {`# A tibble: ${filteredPublications.length} x 6`}
+                {`# A tibble: ${filteredPublications.length} x 5`}
                 {`
-${'date'.padEnd(columnWidths.date)} ${'authors'.padEnd(columnWidths.authors)} ${'year'.padEnd(columnWidths.year)} ${'title'.padEnd(columnWidths.title)} ${'journal'.padEnd(columnWidths.journal)} ${'link'.padEnd(columnWidths.link)}`}
+${'year'.padEnd(columnWidths.year)} ${'authors'.padEnd(columnWidths.authors)} ${'title'.padEnd(columnWidths.title)} ${'journal'.padEnd(columnWidths.journal)} ${'link'.padEnd(columnWidths.link)}`}
                 {`
-${'-'.repeat(columnWidths.date)} ${'-'.repeat(columnWidths.authors)} ${'-'.repeat(columnWidths.year)} ${'-'.repeat(columnWidths.title)} ${'-'.repeat(columnWidths.journal)} ${'-'.repeat(columnWidths.link)}`}
+${'-'.repeat(columnWidths.year)} ${'-'.repeat(columnWidths.authors)} ${'-'.repeat(columnWidths.title)} ${'-'.repeat(columnWidths.journal)} ${'-'.repeat(columnWidths.link)}`}
                 {currentPublications.map(pub =>
                   `
-${(pub.date || '').padEnd(columnWidths.date)} ${(pub.authors || '').padEnd(columnWidths.authors)} ${(pub.year || '').padEnd(columnWidths.year)} ${(pub.title || '').padEnd(columnWidths.title)} ${(pub.journal || '').padEnd(columnWidths.journal)} ${(pub.link || '').padEnd(columnWidths.link)}`
+${(pub.year || '').padEnd(columnWidths.year)} ${(pub.authors || '').padEnd(columnWidths.authors)} ${(pub.title || '').padEnd(columnWidths.title)} ${(pub.journal || '').padEnd(columnWidths.journal)} ${(pub.link || '').padEnd(columnWidths.link)}`
                 ).join('')}
               </code>
             </pre>
