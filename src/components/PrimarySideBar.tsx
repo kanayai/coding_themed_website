@@ -2,7 +2,7 @@ import React, { useState } from 'react'; // Import useState
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { BsFileEarmarkCode, BsInfoCircle, BsNewspaper, BsBook, BsPen, BsEnvelope, BsFolder, BsFileEarmark, BsChevronRight, BsChevronDown } from 'react-icons/bs'; // VSCode-like icons and folder/chevron icons
-import { useTab } from '../context/TabContext'; // Import useTab hook
+import { Tab } from './TabManager'; // Import Tab interface
 import './PrimarySideBar.scss';
 
 const sectionMap = {
@@ -25,8 +25,12 @@ const sectionMap = {
 // Define a type for the keys of sectionMap
 type SectionId = keyof typeof sectionMap;
 
-const PrimarySideBar: React.FC = () => {
-  const { addTab, activeTabId } = useTab();
+interface PrimarySideBarProps {
+  openTab: (tab: Tab) => void;
+  activeTabId: string | null;
+}
+
+const PrimarySideBar: React.FC<PrimarySideBarProps> = ({ openTab, activeTabId }) => {
   const [isHomeOpen, setIsHomeOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isBlogOpen, setIsBlogOpen] = useState(false);
@@ -36,8 +40,8 @@ const PrimarySideBar: React.FC = () => {
 
   const handleSectionClick = (sectionId: SectionId) => {
     const section = sectionMap[sectionId];
-    if (!section.isFolder) { // Only add tab if it's not a folder
-      addTab(section);
+    if (!section.isFolder) { // Only open tab if it's not a folder
+      openTab(section as Tab); // Cast to Tab to satisfy type checker
     }
   };
 

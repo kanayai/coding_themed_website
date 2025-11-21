@@ -1,4 +1,3 @@
-import { Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -12,7 +11,8 @@ import ActivityBar from './components/ActivityBar';
 import PrimarySideBar from './components/PrimarySideBar';
 import TopTabsBar from './components/TopTabsBar';
 import CommandPalette from './components/CommandPalette';
-import { useTab } from './context/TabContext'; // Import useTab hook
+import TabManager, { Tab } from './components/TabManager'; // Import TabManager and Tab interface
+import { Routes, Route } from 'react-router-dom'; // Re-introduce Routes and Route
 
 import './App.scss'; // Import App styles
 
@@ -23,36 +23,40 @@ import CurrentCoursesPage from './pages/CurrentCoursesPage'; // Import CurrentCo
 import PastCoursesPage from './pages/PastCoursesPage'; // Import PastCoursesPage
 
 function App() {
-  const { activeTabId } = useTab(); // Use the useTab hook
-
   return (
     <>
       {/* New VSCode-like Layout */}
       <CommandPalette />
       <div className="main-layout">
         <ActivityBar />
-        <PrimarySideBar />
-        <div className="main-content-container">
-          <TopTabsBar />
-          <div className="main-content-inner">
-            {activeTabId ? ( // Conditionally render content based on activeTabId
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:postId" element={<BlogPostPage />} />
-                <Route path="/research" element={<Research />} />
-                <Route path="/research/projects" element={<ResearchProjectsPage />} />
-                <Route path="/research/publications" element={<PublicationsPage />} />
-                <Route path="/teaching/current-courses" element={<CurrentCoursesPage />} /> {/* New route */}
-                <Route path="/teaching/past-courses" element={<PastCoursesPage />} />     {/* New route */}
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
-            ) : (
-              <div style={{ backgroundColor: '#000', flexGrow: 1 }}></div> // Black background when no tabs are open
-            )}
-          </div>
-        </div>
+        <TabManager>
+          {(openTabs, activeTabId, addTab, removeTab, activateTab, isInitialLoad) => (
+            <>
+              <PrimarySideBar openTab={addTab} activeTabId={activeTabId} />
+              <div className="main-content-container">
+                <TopTabsBar openTabs={openTabs} activeTabId={activeTabId} activateTab={activateTab} removeTab={removeTab} />
+                <div className="main-content-inner">
+                  {activeTabId ? ( // Conditionally render content based on activeTabId
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/blog" element={<Blog />} />
+                      <Route path="/blog/:postId" element={<BlogPostPage />} />
+                      <Route path="/research" element={<Research />} />
+                      <Route path="/research/projects" element={<ResearchProjectsPage />} />
+                      <Route path="/research/publications" element={<PublicationsPage />} />
+                      <Route path="/teaching/current-courses" element={<CurrentCoursesPage />} /> {/* New route */}
+                      <Route path="/teaching/past-courses" element={<PastCoursesPage />} />     {/* New route */}
+                      <Route path="/contact" element={<Contact />} />
+                    </Routes>
+                  ) : (
+                    <div style={{ backgroundColor: '#000', flexGrow: 1 }}></div> // Black background when no tabs are open
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </TabManager>
       </div>
       <Footer />
       <BackToTopButton />

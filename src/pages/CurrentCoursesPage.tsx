@@ -1,12 +1,9 @@
 import React from 'react';
 import CodeBlock from '../components/CodeBlock';
-import { useTab } from '../context/TabContext';
 import { Title } from 'react-head';
 import currentCoursesLatex from '../data/current_courses.tex?raw'; // Import raw LaTeX content
 
 const CurrentCoursesPage: React.FC = () => {
-  const { addTab } = useTab();
-
   return (
     <div className="page-content">
       <Title>Current Courses | Prof. Karim AI</Title>
