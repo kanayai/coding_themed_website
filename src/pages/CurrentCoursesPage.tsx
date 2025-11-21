@@ -92,6 +92,9 @@ Kurtosis:                       2.000   Cond. No.                         7.07
               <h2>{course.title}</h2>
               <pre>{course.description}</pre>
             </div>
+            <div className="code-block-footer">
+              <span className="code-block-language">Markdown</span>
+            </div>
           </div>
 
           {/* Code Example Cell */}

@@ -14,7 +14,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python', isJupy
     <div className="code-block-container">
       {!isJupyter && (
         <div className="code-block-header">
-          <span className="code-block-language">{language}</span>
+          <span className="code-block-language">{language.charAt(0).toUpperCase() + language.slice(1)}</span>
         </div>
       )}
       <div className="code-block">
