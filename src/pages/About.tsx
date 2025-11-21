@@ -17,6 +17,16 @@ import pandas as pd
 # /)  )
 # -"-"-
 
+# (  )   (   )  )
+#  ) (   )  (  (
+#  ( )  (    ) )
+#  _____________
+# <____________> ___ 
+# |             |/ _ \
+# |               | | |
+# |               |_| |
+# |_____________|\\___/ 
+
 def get_profile_data():
     """
     Retrieves academic and contact information for Prof. Karim AI.
