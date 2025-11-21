@@ -45,7 +45,6 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
 
   const [openTabs, setOpenTabs] = useState<Tab[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -59,7 +58,7 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
     });
     setActiveTabId(tab.id);
     navigate(tab.path);
-  }, [navigate]); // Removed openTabs from dependency array as it's handled by setOpenTabs(prevTabs => ...)
+  }, [openTabs, navigate]);
 
   const removeTab = useCallback((tabId: string) => {
     setOpenTabs(prevTabs => {
@@ -114,56 +113,36 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
   // Effect to handle initial load and URL changes
   useEffect(() => {
     const currentPath = location.pathname;
-    const activeTabByPath = openTabs.find(tab => tab.path === currentPath);
+    const tabAlreadyOpen = openTabs.find(tab => tab.path === currentPath);
 
-    if (isInitialLoad) {
+    if (tabAlreadyOpen) {
+      // If current path matches an open tab, just activate it if not already active
+      if (activeTabId !== tabAlreadyOpen.id) {
+        setActiveTabId(tabAlreadyOpen.id);
+      }
+    } else {
+      // Current path does NOT match an open tab
       const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
+
       if (matchingDefaultTab) {
+        // If it's a known default tab but not open, add it and activate
         addTab(matchingDefaultTab);
       } else {
-        // If it's initial load and path is not a default tab, and not home, default to home
-        // But only if currentPath is not already home
-        if (currentPath !== homeTab.path) {
-          addTab(homeTab);
-        } else {
-          // If it's home and it's the initial load, just activate it if it's already in openTabs
-          // If openTabs is empty, add homeTab
-          if (openTabs.length === 0) {
-            addTab(homeTab);
-          } else {
-            setActiveTabId(homeTab.id);
-          }
-        }
-      }
-      setIsInitialLoad(false);
-    } else {
-      // Logic for subsequent URL changes (e.g., browser back/forward, direct URL entry)
-      if (activeTabByPath && activeTabId !== activeTabByPath.id) {
-        setActiveTabId(activeTabByPath.id);
-      } else if (!activeTabByPath) {
-        const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
-        if (matchingDefaultTab) {
-          addTab(matchingDefaultTab);
-        } else if (currentPath === homeTab.path && openTabs.length === 0) {
-          // If current path is home and no tabs are open, add homeTab
-          addTab(homeTab);
-        } else if (currentPath !== homeTab.path && activeTabId !== null) {
-          // If the current path doesn't match an open tab, not a known default tab, and not home,
-          // then deactivate the current active tab to show empty state.
+        // If it's not an open tab AND not a default tab (e.g., dynamic page, unknown URL)
+        // Set activeTabId to null to show the empty state.
+        if (activeTabId !== null) {
           setActiveTabId(null);
-        } else if (currentPath === homeTab.path && activeTabId !== homeTab.id) {
-          // If we navigate back to home, and home isn't the active tab, activate it if open
-          const homeIsOpen = openTabs.some(tab => tab.id === homeTab.id);
-          if (homeIsOpen) {
-            setActiveTabId(homeTab.id);
-          } else if (openTabs.length === 0) {
-            // If home is not open and no other tabs, add homeTab
-            addTab(homeTab);
-          }
         }
       }
     }
-  }, [location.pathname, isInitialLoad, openTabs, activeTabId, addTab, defaultTabsList, homeTab]);
+
+    // Handle initial load specifically: if no tabs are open and we're on '/', add home.
+    // This runs only if openTabs is empty after the above logic, meaning nothing was auto-opened.
+    if (openTabs.length === 0 && currentPath === homeTab.path) {
+      addTab(homeTab);
+    }
+
+  }, [location.pathname, openTabs, activeTabId, addTab, defaultTabsList, homeTab]);
 
 
   return (
