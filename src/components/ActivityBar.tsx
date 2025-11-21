@@ -17,10 +17,11 @@ import './ActivityBar.scss';
 
 const ActivityBar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { setSearchTerm } = useSearch();
+  const { setSearchTerm, toggleSearchVisibility } = useSearch();
 
   const handleSearchClick = () => {
-    setSearchTerm(''); // Clear search term to show all results, or navigate to search page
+    setSearchTerm(''); // Clear search term when opening search
+    toggleSearchVisibility(); // Toggle visibility of the search command palette
   };
 
   return (
@@ -29,9 +30,9 @@ const ActivityBar: React.FC = () => {
         <NavLink to="/" className={({ isActive }) => (isActive ? 'nav-link activity-bar-icon active' : 'nav-link activity-bar-icon')} aria-label="Explorer">
           <BsFileEarmarkText />
         </NavLink>
-        <NavLink to="/search-page" onClick={handleSearchClick} className="nav-link activity-bar-icon" aria-label="Search">
+        <Nav.Link onClick={handleSearchClick} className="activity-bar-icon" aria-label="Search">
           <BsSearch />
-        </NavLink>
+        </Nav.Link>
         <NavLink to="/run-debug" className={({ isActive }) => (isActive ? 'nav-link activity-bar-icon active' : 'nav-link activity-bar-icon')} aria-label="Run and Debug">
           <BsPlayCircle />
         </NavLink>
