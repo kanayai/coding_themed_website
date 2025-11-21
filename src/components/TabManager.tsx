@@ -25,8 +25,7 @@ interface TabManagerProps {
     activeTabId: string | null,
     addTab: (tab: Tab) => void,
     removeTab: (tabId: string) => void,
-    activateTab: (tabId: string) => void,
-    isInitialLoad: boolean
+    activateTab: (tabId: string) => void
   ) => ReactNode;
 }
 
@@ -147,7 +146,7 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
 
   return (
     <>
-      {children(openTabs, activeTabId, addTab, removeTab, activateTab, isInitialLoad)}
+      {children(openTabs, activeTabId, addTab, removeTab, activateTab)}
     </>
   );
 };
