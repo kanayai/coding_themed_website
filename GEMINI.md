@@ -40,6 +40,7 @@ My academic website
     - YAML for headers of Quarto Files.
 - Website sections should look like the user is editing inside VScode with the following UI components:
     - Status bar at the bottom similar to VSCode (blue background with white text). Add containers for line/column number, language mode (e.g., Python, R, LaTeX, YAML), encoding (UTF-8), and Git branch (main). On the right side of the status bar, include links to my social media profiles using small icons.
+    - You can consult the Code OSS GitHub repo https://github.com/microsoft/vscode-oss for reference on VSCode UI components and styling.
     - Activity bar on the far left with typical VSCode icons (Explorer, Search, Source Control, Run and Debug, Extensions) (dark grey background with white icons) use this for the search functionality (magnifying glass icon), use this for the dark/light mode using a sun icon, also include the cog/settings icon at the bottom of the activity bar (no functionality yet but can be added later)
     - Primary side bar just next to the activity bar with icons for each website section (Home, About, Blog, Research, Teaching, Contact) similar to VSCode sidebar when the explorer is open 
     - No secondary sidebar
