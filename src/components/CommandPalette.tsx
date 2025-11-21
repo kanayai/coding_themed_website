@@ -41,7 +41,7 @@ const CommandPalette: React.FC = () => {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type command or search (Cmd+Shift+Enter to toggle)"
+            placeholder="Type command or search (Cmd+Shift+P to toggle)"
             className="command-input"
             value={searchTerm}
             onChange={handleInputChange}
@@ -49,7 +49,7 @@ const CommandPalette: React.FC = () => {
           />
         ) : (
           <div className="command-input-placeholder" onClick={toggleSearchVisibility}>
-            Type command or search (Cmd+Shift+Enter to toggle)
+            Type command or search (Cmd+Shift+P to toggle)
           </div>
         )}
       </div>

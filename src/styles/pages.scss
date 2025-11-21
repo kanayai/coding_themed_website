@@ -22,6 +22,19 @@
 .jupyter-markdown {
   padding: 15px;
   color: var(--text-color-dark);
+  position: relative; /* Ensure position relative for absolute children */
+}
+
+.jupyter-markdown .code-block-footer {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  background-color: var(--code-block-bg-dark);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.75em;
+  color: #ccc;
+  opacity: 0.8;
 }
 
 .jupyter-code .code-block {
@@ -114,6 +127,10 @@ body[data-theme='light'] {
   }
   .jupyter-markdown {
     color: var(--text-color-light);
+  }
+  .jupyter-markdown .code-block-footer {
+    background-color: var(--code-block-bg-light);
+    color: #555;
   }
   .cell-input-prompt, .cell-output-prompt {
     background-color: var(--code-block-border-light);
