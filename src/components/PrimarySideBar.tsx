@@ -16,7 +16,7 @@ const sectionMap = {
   publications: { id: 'publications', name: 'publications.R', path: '/research/publications', language: 'r', icon: BsFileEarmark },
   projects: { id: 'projects', name: 'projects.R', path: '/research/projects', language: 'r', icon: BsFileEarmark },
   teaching: { id: 'teaching', name: 'Teaching', isFolder: true, icon: BsFolder }, // Teaching as a folder
-  currentCourses: { id: 'currentCourses', name: 'current_courses.tex', path: '/teaching/current-courses', language: 'latex', icon: BsFileEarmark },
+  currentCourses: { id: 'currentCourses', name: 'current_courses.ipynb', path: '/teaching/current-courses', language: 'python', icon: BsFileEarmark },
   pastCourses: { id: 'pastCourses', name: 'past_courses.tex', path: '/teaching/past-courses', language: 'latex', icon: BsFileEarmark },
   contact: { id: 'contact', name: 'Contact', isFolder: true, icon: BsFolder },
   contact_file: { id: 'contact_file', name: 'contact.yaml', path: '/contact', language: 'yaml', icon: BsEnvelope },
