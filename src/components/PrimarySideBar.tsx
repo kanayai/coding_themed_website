@@ -1,69 +1,51 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { BsChevronRight } from 'react-icons/bs'; // For the '>' symbol
+import { BsFileEarmarkCode, BsInfoCircle, BsNewspaper, BsBook, BsPen, BsEnvelope } from 'react-icons/bs'; // VSCode-like icons
+import { useTab } from '../context/TabContext'; // Import useTab hook
 import './PrimarySideBar.scss';
 
-const PrimarySideBar: React.FC = () => {
-  const [isResearchOpen, setResearchOpen] = useState(false);
+const sectionMap = {
+  home: { id: 'home', name: 'home.py', path: '/', language: 'python', icon: BsFileEarmarkCode },
+  about: { id: 'about', name: 'about.py', path: '/about', language: 'python', icon: BsInfoCircle },
+  blog: { id: 'blog', name: 'blog.qmd', path: '/blog', language: 'yaml', icon: BsNewspaper },
+  research: { id: 'research', name: 'research.R', path: '/research', language: 'r', icon: BsBook },
+  // Publications and Projects are sub-sections of Research, so they might not need direct tabs
+  // If they do, they'll need their own unique IDs and paths. For now, Research will open research.R
+  teaching: { id: 'teaching', name: 'teaching.tex', path: '/teaching', language: 'latex', icon: BsPen },
+  contact: { id: 'contact', name: 'contact.yaml', path: '/contact', language: 'yaml', icon: BsEnvelope },
+};
 
-  const toggleResearch = () => {
-    setResearchOpen(!isResearchOpen);
+const PrimarySideBar: React.FC = () => {
+  const { addTab, activeTabId } = useTab();
+
+  const handleSectionClick = (sectionId: keyof typeof sectionMap) => {
+    const section = sectionMap[sectionId];
+    addTab(section);
   };
+
+  const SidebarItem = ({ sectionId, label, Icon }: { sectionId: keyof typeof sectionMap, label: string, Icon: any }) => (
+    <div
+      className={`sidebar-item ${activeTabId === sectionId ? 'active' : ''}`}
+      onClick={() => handleSectionClick(sectionId)}
+      aria-label={label}
+    >
+      <div className="d-flex align-items-center">
+        <Icon className="sidebar-icon" />
+        <span className="sidebar-item-label">{label}</span>
+      </div>
+    </div>
+  );
 
   return (
     <div className="primary-sidebar">
       <Nav className="flex-column">
-        <NavLink to="/" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Home">
-          <div className="d-flex align-items-center">
-            <BsChevronRight className="sidebar-arrow" />
-            <span className="sidebar-item-label">Home</span>
-          </div>
-        </NavLink>
-        <NavLink to="/about" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="About">
-          <div className="d-flex align-items-center">
-            <BsChevronRight className="sidebar-arrow" />
-            <span className="sidebar-item-label">About</span>
-          </div>
-        </NavLink>
-        <NavLink to="/blog" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Blog">
-          <div className="d-flex align-items-center">
-            <BsChevronRight className="sidebar-arrow" />
-            <span className="sidebar-item-label">Blog</span>
-          </div>
-        </NavLink>
-        <div className="sidebar-item-toggle" onClick={toggleResearch}>
-          <div className="d-flex align-items-center">
-            <BsChevronRight className={`sidebar-arrow ${isResearchOpen ? 'open' : ''}`} />
-            <span className="sidebar-item-label">Research</span>
-          </div>
-        </div>
-        {isResearchOpen && (
-          <div className="sidebar-submenu">
-            <NavLink to="/research/publications" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Publications">
-              <div className="d-flex align-items-center">
-                <span className="sidebar-item-label">Publications</span>
-              </div>
-            </NavLink>
-            <NavLink to="/research/projects" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Research Projects">
-              <div className="d-flex align-items-center">
-                <span className="sidebar-item-label">Projects</span>
-              </div>
-            </NavLink>
-          </div>
-        )}
-        <NavLink to="/teaching" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Teaching">
-          <div className="d-flex align-items-center">
-            <BsChevronRight className="sidebar-arrow" />
-            <span className="sidebar-item-label">Teaching</span>
-          </div>
-        </NavLink>
-        <NavLink to="/contact" className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')} aria-label="Contact">
-          <div className="d-flex align-items-center">
-            <BsChevronRight className="sidebar-arrow" />
-            <span className="sidebar-item-label">Contact</span>
-          </div>
-        </NavLink>
+        <SidebarItem sectionId="home" label="Home" Icon={sectionMap.home.icon} />
+        <SidebarItem sectionId="about" label="About" Icon={sectionMap.about.icon} />
+        <SidebarItem sectionId="blog" label="Blog" Icon={sectionMap.blog.icon} />
+        <SidebarItem sectionId="research" label="Research" Icon={sectionMap.research.icon} />
+        <SidebarItem sectionId="teaching" label="Teaching" Icon={sectionMap.teaching.icon} />
+        <SidebarItem sectionId="contact" label="Contact" Icon={sectionMap.contact.icon} />
       </Nav>
     </div>
   );
