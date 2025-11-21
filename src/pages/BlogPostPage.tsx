@@ -10,7 +10,7 @@ const parseQmdHeader = (qmdContent: string) => {
   const match = qmdHeaderRegex.exec(qmdContent);
   if (match && match[1]) {
     const yamlString = match[1];
-    const lines = yamlString.split('\\n');
+    const lines = yamlString.split('\n');
     const header: { [key: string]: string } = {};
     lines.forEach(line => {
       const parts = line.split(':');

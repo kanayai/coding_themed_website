@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import '../styles/pages.scss';
 import { useSearch } from '../context/SearchContext';
 import { Title } from 'react-head';
@@ -42,6 +43,7 @@ const extractDescription = (qmdContent: string) => {
 
 const Blog: React.FC = () => {
   const { searchTerm } = useSearch();
+  const navigate = useNavigate();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
@@ -102,7 +104,12 @@ format: html
                   <Card.Title>{post.title}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">{post.date}</Card.Subtitle>
                   <Card.Text>{post.description}</Card.Text>
-                  <Card.Link href={post.path} className="btn-code">Read Post</Card.Link>
+                  <button
+                    onClick={() => navigate(post.path)}
+                    className="btn btn-code"
+                  >
+                    Read Post
+                  </button>
                 </Card.Body>
               </Card>
             </Col>
