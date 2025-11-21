@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './CommandPalette.scss';
 import { useSearch } from '../context/SearchContext'; // Import useSearch hook
+import { BsLayoutSplit, BsLayoutSidebar, BsLayoutSidebarReverse } from 'react-icons/bs';
 
 const CommandPalette: React.FC = () => {
   const { searchTerm, setSearchTerm, isSearchVisible, toggleSearchVisibility } = useSearch();
@@ -48,6 +49,11 @@ const CommandPalette: React.FC = () => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
+      </div>
+      <div className="layout-icons">
+        <BsLayoutSplit />
+        <BsLayoutSidebar />
+        <BsLayoutSidebarReverse />
       </div>
     </div>
   );

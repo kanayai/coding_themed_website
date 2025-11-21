@@ -62,6 +62,25 @@
       background-color: var(--code-block-bg-dark);
     }
   }
+
+  .layout-icons {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 15px; /* Position on the right */
+
+    svg {
+      font-size: 1.2em;
+      margin-left: 10px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 body[data-theme='light'] {
