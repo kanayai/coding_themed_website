@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './CommandPalette.scss';
 import { useSearch } from '../context/SearchContext';
-import { BsLayoutSplit, BsLayoutSidebar, BsLayoutSidebarReverse } from 'react-icons/bs';
+import { BsViewStacked } from 'react-icons/bs';
 import { sectionMap } from './PrimarySideBar'; // Import sectionMap
 import { Tab } from './TabManager'; // Import Tab interface
 
@@ -105,9 +105,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ addTab }) => {
       </div>
 
       <div className="layout-icons">
-        <BsLayoutSplit />
-        <BsLayoutSidebar />
-        <BsLayoutSidebarReverse />
+        <BsViewStacked />
       </div>
     </div>
   );
