@@ -67,7 +67,7 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
       
       if (newTabs.length === 0) {
         setActiveTabId(null);
-        navigate(homeTab.path); // Navigate to home or a default empty state
+        // Do not navigate, App.tsx will display the black background
         return [];
       }
 
@@ -82,22 +82,26 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
           // If no tab to the left, activate the one that shifted into its place (the new first tab)
           newActiveTab = newTabs[0];
         } else {
-          // Fallback to home if no other tabs exist (should only happen if home is the only tab left)
-          newActiveTab = homeTab;
+          // Fallback to home if no other tabs exist, but this should be handled by newTabs.length === 0
+          // If home is the only tab left (and it's now closed), then newTabs.length would be 0
+          // This else block is mostly a safeguard.
+          setActiveTabId(null);
+          // Do not navigate, App.tsx will display the black background
+          return [];
         }
 
         if (newActiveTab) {
           setActiveTabId(newActiveTab.id);
           navigate(newActiveTab.path);
         } else {
-          // Fallback if newActiveTab is somehow null
+          // Fallback if newActiveTab is somehow null (should not happen now with newTabs.length === 0 check)
           setActiveTabId(null);
-          navigate(homeTab.path);
+          // Do not navigate
         }
       }
       return newTabs;
     });
-  }, [activeTabId, navigate, homeTab]);
+  }, [activeTabId, navigate]);
 
   const activateTab = useCallback((tabId: string) => {
     const tabToActivate = openTabs.find(tab => tab.id === tabId);
@@ -117,8 +121,19 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
       if (matchingDefaultTab) {
         addTab(matchingDefaultTab);
       } else {
-        // If it's initial load and path is not a default tab, add home tab
-        addTab(homeTab);
+        // If it's initial load and path is not a default tab, and not home, default to home
+        // But only if currentPath is not already home
+        if (currentPath !== homeTab.path) {
+          addTab(homeTab);
+        } else {
+          // If it's home and it's the initial load, just activate it if it's already in openTabs
+          // If openTabs is empty, add homeTab
+          if (openTabs.length === 0) {
+            addTab(homeTab);
+          } else {
+            setActiveTabId(homeTab.id);
+          }
+        }
       }
       setIsInitialLoad(false);
     } else {
@@ -129,17 +144,26 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
         const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
         if (matchingDefaultTab) {
           addTab(matchingDefaultTab);
-        } else if (openTabs.length > 0 && activeTabId !== null) {
-          // If the current path doesn't match an open tab, and it's not a known default tab
-          // then deactivate the current active tab.
-          // This handles cases like dynamic blog post pages or invalid URLs
-          // The main content area will either stay on the old route or display empty.
-          // No navigation needed here, just update activeTabId.
+        } else if (currentPath === homeTab.path && openTabs.length === 0) {
+          // If current path is home and no tabs are open, add homeTab
+          addTab(homeTab);
+        } else if (currentPath !== homeTab.path && activeTabId !== null) {
+          // If the current path doesn't match an open tab, not a known default tab, and not home,
+          // then deactivate the current active tab to show empty state.
           setActiveTabId(null);
+        } else if (currentPath === homeTab.path && activeTabId !== homeTab.id) {
+          // If we navigate back to home, and home isn't the active tab, activate it if open
+          const homeIsOpen = openTabs.some(tab => tab.id === homeTab.id);
+          if (homeIsOpen) {
+            setActiveTabId(homeTab.id);
+          } else if (openTabs.length === 0) {
+            // If home is not open and no other tabs, add homeTab
+            addTab(homeTab);
+          }
         }
       }
     }
-  }, [location.pathname, isInitialLoad, openTabs, activeTabId, addTab, defaultTabsList]);
+  }, [location.pathname, isInitialLoad, openTabs, activeTabId, addTab, defaultTabsList, homeTab]);
 
 
   return (
