@@ -1,6 +1,8 @@
 ---
 title: "Anscombe's quartet"
-format: html
+date: "2025-11-15"
+description: "This is a short summary of the post that will appear in the blog list and on the card."
+categories: ["tutorial", "python"] # Use categories for better filtering
 ---
 
 
