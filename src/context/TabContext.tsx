@@ -81,11 +81,19 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const removeTab = (tabId: string) => {
+    if (tabId === 'home') {
+      return; // Prevent closing the home tab
+    }
     setOpenTabs(prevTabs => {
       const newTabs = prevTabs.filter(tab => tab.id !== tabId);
       if (newTabs.length === 0) {
-        setActiveTabId(null);
-        navigate('/'); // Navigate to home if no tabs are left
+        // This case should ideally not be hit if 'home' cannot be closed,
+        // but as a fallback, ensure 'home' is re-added if all others are closed.
+        const homeTab: Tab = { id: 'home', name: 'home.py', path: '/', language: 'python' };
+        setOpenTabs([homeTab]);
+        setActiveTabId(homeTab.id);
+        navigate(homeTab.path);
+        return [homeTab];
       } else if (activeTabId === tabId) {
         // If the active tab is closed, activate the last tab in the new list
         const lastTab = newTabs[newTabs.length - 1];
