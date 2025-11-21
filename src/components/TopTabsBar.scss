@@ -42,7 +42,7 @@
 
       &.active {
         background-color: var(--background-color-dark); /* Active tab background */
-        color: var(--text-color-light); /* Lighter text for active tab */
+        color: #fff; /* Lighter text for active tab */
         opacity: 1; /* Full opacity for active tab */
         border-color: var(--code-block-border-dark);
         border-bottom-color: var(--background-color-dark); /* To blend with editor area */
