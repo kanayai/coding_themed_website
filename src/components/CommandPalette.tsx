@@ -77,7 +77,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ addTab }) => {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Type command or search (Cmd+Shift+P to toggle)"
+              placeholder="Type (Cmd+Shift+P to toggle)"
               className="command-input"
               value={searchTerm}
               onChange={handleInputChange}
@@ -99,7 +99,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ addTab }) => {
           </>
         ) : (
           <div className="command-input-placeholder" onClick={toggleSearchVisibility}>
-            Type command or search (Cmd+Shift+P to toggle)
+            Type (Cmd+Shift+P to toggle)
           </div>
         )}
       </div>
