@@ -5,7 +5,7 @@ import {
   BsFileEarmarkText, // Explorer
   BsSearch,          // Search
   BsPlayCircle,      // Run and Debug
-  BsPuzzle,          // Extensions
+  BsGrid,            // Extensions
   BsSun,             // Light Mode
   BsMoon,            // Dark Mode
   BsGear,            // Settings
@@ -37,7 +37,7 @@ const ActivityBar: React.FC = () => {
           <BsPlayCircle />
         </NavLink>
         <NavLink to="/extensions" className={({ isActive }) => (isActive ? 'nav-link activity-bar-icon active' : 'nav-link activity-bar-icon')} aria-label="Extensions">
-          <BsPuzzle />
+          <BsGrid />
         </NavLink>
       </div>
 
