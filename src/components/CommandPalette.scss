@@ -42,7 +42,7 @@
     justify-content: center; /* Center the input within its container */
   }
 
-  .command-input {
+  .command-input, .command-input-placeholder {
     width: 60%; /* Adjust width as needed */
     padding: 3px 10px;
     border: 1px solid var(--code-block-border-dark);
@@ -53,15 +53,23 @@
     font-size: 0.9em;
     outline: none;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-
-    &::placeholder {
-      color: var(--text-color-dark);
+  }
+  
+  .command-input-placeholder {
+    cursor: pointer;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
     }
+  }
 
-    &:focus {
-      border-color: #007acc; /* Highlight on focus */
-      background-color: var(--code-block-bg-dark);
-    }
+  .command-input::placeholder {
+    color: var(--text-color-dark);
+  }
+
+  .command-input:focus {
+    border-color: #007acc; /* Highlight on focus */
+    background-color: var(--code-block-bg-dark);
   }
 
   .layout-icons {
@@ -87,19 +95,19 @@ body[data-theme='light'] {
     background-color: var(--code-block-bg-light);
     border-bottom: 1px solid var(--code-block-border-light);
 
-    .command-input {
+    .command-input, .command-input-placeholder {
       background-color: var(--code-block-border-light);
       border-color: var(--code-block-border-light);
       color: var(--text-color-light);
+    }
+    
+    .command-input::placeholder {
+      color: var(--text-color-light);
+    }
 
-      &::placeholder {
-        color: var(--text-color-light);
-      }
-
-      &:focus {
-        border-color: #007acc;
-        background-color: var(--code-block-bg-light);
-      }
+    .command-input:focus {
+      border-color: #007acc;
+      background-color: var(--code-block-bg-light);
     }
   }
 }

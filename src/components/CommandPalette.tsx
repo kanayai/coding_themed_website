@@ -36,19 +36,23 @@ const CommandPalette: React.FC = () => {
         <span className="control-button maximize"></span>
       </div>
       
-      {isSearchVisible && (
-        <div className="command-input-container">
+      <div className="command-input-container">
+        {isSearchVisible ? (
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type command or search (Ctrl+P)"
+            placeholder="Type command or search (Cmd+Shift+Enter to toggle)"
             className="command-input"
             value={searchTerm}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
           />
-        </div>
-      )}
+        ) : (
+          <div className="command-input-placeholder" onClick={toggleSearchVisibility}>
+            Type command or search (Cmd+Shift+Enter to toggle)
+          </div>
+        )}
+      </div>
 
       <div className="layout-icons">
         <BsLayoutSplit />

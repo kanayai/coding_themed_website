@@ -1,7 +1,7 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { BsX, BsLayoutSplit, BsLayoutSidebar, BsLayoutSidebarReverse } from 'react-icons/bs';
+import { BsX } from 'react-icons/bs';
 import { Tab } from './TabManager'; // Import Tab interface
 import './TopTabsBar.scss';
 
@@ -46,11 +46,6 @@ const TopTabsBar: React.FC<TopTabsBarProps> = ({ openTabs, activeTabId, activate
           </Nav.Item>
         ))}
       </Nav>
-      <div className="layout-icons">
-        <BsLayoutSplit />
-        <BsLayoutSidebar />
-        <BsLayoutSidebarReverse />
-      </div>
     </div>
   );
 };
