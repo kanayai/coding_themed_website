@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { BsClipboard } from 'react-icons/bs';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'; // Using atomDark for VSCode-like dark theme
 import './CodeBlock.scss';
 
 interface CodeBlockProps {
@@ -29,11 +31,9 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python' }) => {
               <div key={i} className="line-number">{i + 1}</div>
             ))}
           </div>
-          <pre>
-            <code>
-              {code}
-            </code>
-          </pre>
+          <SyntaxHighlighter language={language} style={atomDark} customStyle={{ margin: 0, background: 'none', padding: 0 }}>
+            {code}
+          </SyntaxHighlighter>
         </div>
       </div>
     </div>
