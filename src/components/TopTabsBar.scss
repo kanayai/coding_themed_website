@@ -26,7 +26,8 @@
 
     .nav-link {
       background-color: var(--code-block-bg-dark); /* Inactive tab background */
-      color: var(--text-color-dark);
+      color: #ccc; /* Lighter color for inactive tab text */
+      opacity: 0.7; /* Make inactive tabs slightly less prominent */
       border: 1px solid transparent;
       border-bottom: none;
       border-top-left-radius: 0.25rem;
@@ -37,11 +38,12 @@
       align-items: center; /* Center content vertically */
       position: relative;
       top: 1px; /* Overlap the bottom border slightly */
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
 
       &.active {
         background-color: var(--background-color-dark); /* Active tab background */
         color: var(--text-color-light); /* Lighter text for active tab */
+        opacity: 1; /* Full opacity for active tab */
         border-color: var(--code-block-border-dark);
         border-bottom-color: var(--background-color-dark); /* To blend with editor area */
       }
