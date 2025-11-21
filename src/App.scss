@@ -12,10 +12,10 @@
 }
 
 .main-content-inner {
-  padding-top: 35px; /* For TopTabsBar */
+  padding-top: 65px; /* For CommandPalette + TopTabsBar */
   display: flex;
   flex-direction: column;
-  min-height: calc(100% - 35px); /* Full height minus top padding */
+  min-height: calc(100% - 65px); /* Full height minus top padding */
 }
 
 @media (max-width: 768px) {
