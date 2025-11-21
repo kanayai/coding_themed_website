@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface Tab {
@@ -35,6 +35,46 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const navigate = useNavigate();
   const location = useLocation();
 
+  const addTab = useCallback((tab: Tab) => {
+    const tabExists = openTabs.some(t => t.id === tab.id);
+    if (!tabExists) {
+      setOpenTabs(prevTabs => [...prevTabs, tab]);
+    }
+    setActiveTabId(tab.id);
+    navigate(tab.path);
+  }, [openTabs, navigate]);
+
+  const removeTab = useCallback((tabId: string) => {
+    if (tabId === 'home') {
+      return; // Prevent closing the home tab
+    }
+    setOpenTabs(prevTabs => {
+      const newTabs = prevTabs.filter(tab => tab.id !== tabId);
+      if (activeTabId === tabId) {
+        // If the active tab is closed, determine which tab to activate next
+        const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
+        const newActiveTab = newTabs[closedTabIndex - 1] || newTabs[closedTabIndex];
+        if (newActiveTab) {
+          setActiveTabId(newActiveTab.id);
+          navigate(newActiveTab.path);
+        } else {
+          // This case should ideally not be hit since 'home' is always present
+          setActiveTabId('home');
+          navigate('/');
+        }
+      }
+      return newTabs;
+    });
+  }, [activeTabId, navigate]);
+
+  const activateTab = useCallback((tabId: string) => {
+    const tabToActivate = openTabs.find(tab => tab.id === tabId);
+    if (tabToActivate) {
+      setActiveTabId(tabId);
+      navigate(tabToActivate.path);
+    }
+  }, [openTabs, navigate]);
+
   // Effect to set the active tab based on URL changes
   useEffect(() => {
     const currentPath = location.pathname;
@@ -57,46 +97,6 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       }
     }
   }, [location.pathname, openTabs, activeTabId, navigate, addTab, defaultTabsList]);
-
-  const addTab = (tab: Tab) => {
-    const tabExists = openTabs.some(t => t.id === tab.id);
-    if (!tabExists) {
-      setOpenTabs(prevTabs => [...prevTabs, tab]);
-    }
-    setActiveTabId(tab.id);
-    navigate(tab.path);
-  };
-
-  const removeTab = (tabId: string) => {
-    if (tabId === 'home') {
-      return; // Prevent closing the home tab
-    }
-    setOpenTabs(prevTabs => {
-      const newTabs = prevTabs.filter(tab => tab.id !== tabId);
-      if (activeTabId === tabId) {
-        // If the active tab is closed, determine which tab to activate next
-        const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
-        const newActiveTab = newTabs[closedTabIndex - 1] || newTabs[closedTabIndex];
-        if (newActiveTab) {
-          setActiveTabId(newActiveTab.id);
-          navigate(newActiveTab.path);
-        } else {
-          // This case should ideally not be hit since 'home' is always present
-          setActiveTabId('home');
-          navigate('/');
-        }
-      }
-      return newTabs;
-    });
-  };
-
-  const activateTab = (tabId: string) => {
-    const tabToActivate = openTabs.find(tab => tab.id === tabId);
-    if (tabToActivate) {
-      setActiveTabId(tabId);
-      navigate(tabToActivate.path);
-    }
-  };
 
   return (
     <TabContext.Provider value={{ openTabs, activeTabId, addTab, removeTab, activateTab }}>
