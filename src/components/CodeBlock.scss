@@ -1,5 +1,6 @@
 .code-block-container {
   margin-bottom: 20px;
+  position: relative; /* Add relative positioning for footer */
 
   .code-block-header {
     display: flex;
@@ -18,26 +19,25 @@
     .code-block-language {
       font-weight: bold;
     }
+  }
 
-    .btn-code {
-      background-color: #007acc;
-      color: #ffffff;
-      border: none;
-      padding: 3px 8px;
-      font-size: 0.75em;
-
-      &:hover {
-        background-color: #005f99;
-      }
-    }
+  .code-block-footer {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    background-color: var(--code-block-bg-dark);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.75em;
+    color: #ccc;
+    opacity: 0.8;
   }
 
   .code-block {
     background-color: var(--code-block-bg-dark);
     border: 1px solid var(--code-block-border-dark);
     padding: 15px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 5px;
     overflow-x: auto;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 
@@ -92,11 +92,11 @@ body[data-theme='light'] {
       background-color: var(--code-block-border-light);
       border-color: var(--code-block-border-light);
       color: var(--text-color-light);
-
-      .btn-code {
-        background-color: #007acc;
-        color: #ffffff;
-      }
+    }
+    
+    .code-block-footer {
+      background-color: var(--code-block-bg-light);
+      color: #555;
     }
 
     .code-block {

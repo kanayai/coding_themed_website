@@ -6,14 +6,17 @@ import './CodeBlock.scss';
 interface CodeBlockProps {
   code: string;
   language?: string; // Optional: for future syntax highlighting based on language
+  isJupyter?: boolean; // New prop for Jupyter-style rendering
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python' }) => {
+const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python', isJupyter = false }) => {
   return (
     <div className="code-block-container">
-      <div className="code-block-header">
-        <span className="code-block-language">{language}</span>
-      </div>
+      {!isJupyter && (
+        <div className="code-block-header">
+          <span className="code-block-language">{language}</span>
+        </div>
+      )}
       <div className="code-block">
         <div className="code-block-content">
           <div className="line-numbers">
@@ -26,6 +29,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python' }) => {
           </SyntaxHighlighter>
         </div>
       </div>
+      {isJupyter && (
+        <div className="code-block-footer">
+          <span className="code-block-language">{language}</span>
+        </div>
+      )}
     </div>
   );
 };

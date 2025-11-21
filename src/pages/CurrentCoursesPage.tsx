@@ -99,7 +99,7 @@ Kurtosis:                       2.000   Cond. No.                         7.07
             <div className="jupyter-cell jupyter-code">
               <div className="cell-input-prompt">In []</div>
               <div className="cell-content">
-                <CodeBlock code={course.codeExample} language="python" />
+                <CodeBlock code={course.codeExample} language="python" isJupyter={true} />
               </div>
             </div>
           )}
