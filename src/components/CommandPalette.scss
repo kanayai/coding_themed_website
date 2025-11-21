@@ -111,3 +111,11 @@ body[data-theme='light'] {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .command-palette {
+    .command-input, .command-input-placeholder {
+      width: 90%; /* Increase width on smaller screens */
+    }
+  }
+}

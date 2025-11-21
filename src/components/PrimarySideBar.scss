@@ -1,9 +1,9 @@
 .primary-sidebar {
-  width: 250px;
+  width: var(--primary-sidebar-width);
   background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency */
   height: calc(100vh - var(--command-palette-height) - var(--footer-height)); /* Adjusted height to avoid overlapping footer and command palette */
   position: fixed;
-  left: 50px; /* Right next to Activity Bar */
+  left: var(--activity-bar-width); /* Right next to Activity Bar */
   top: var(--command-palette-height); /* Position below Command Palette */
   padding-top: 0; /* No need for padding-top here as top is set */
   z-index: 1000;

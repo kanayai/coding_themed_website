@@ -4,7 +4,7 @@
 }
 
 .main-content-container {
-  margin-left: 300px; /* ActivityBar + PrimarySideBar */
+  margin-left: calc(var(--activity-bar-width) + var(--primary-sidebar-width)); /* ActivityBar + PrimarySideBar */
   flex-grow: 1;
   position: relative;
   height: 100%; /* Ensure container has full height */
@@ -24,11 +24,11 @@
   }
 
   .main-content-container {
-    margin-left: 50px; /* Only ActivityBar is visible */
+    margin-left: var(--activity-bar-width); /* Only ActivityBar is visible */
   }
 
   .top-tabs-bar {
-    width: calc(100% - 50px);
-    left: 50px;
+    width: calc(100% - var(--activity-bar-width));
+    left: var(--activity-bar-width);
   }
 }

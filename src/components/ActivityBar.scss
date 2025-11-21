@@ -1,5 +1,5 @@
 .activity-bar {
-  width: 50px;
+  width: var(--activity-bar-width);
   background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency with VSCode's dark theme */
   height: calc(100vh - var(--footer-height) - var(--command-palette-height)); /* Adjusted height to avoid overlapping footer and command palette */
   position: fixed;

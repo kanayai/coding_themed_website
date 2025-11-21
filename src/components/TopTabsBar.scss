@@ -1,9 +1,9 @@
 .top-tabs-bar {
   height: 35px;
   background-color: var(--code-block-bg-dark); /* Using code-block-bg-dark for consistency */
-  width: calc(100% - 300px); /* Full width minus Activity Bar and Primary Sidebar */
+  width: calc(100% - var(--activity-bar-width) - var(--primary-sidebar-width)); /* Full width minus Activity Bar and Primary Sidebar */
   position: fixed;
-  left: 300px;
+  left: calc(var(--activity-bar-width) + var(--primary-sidebar-width));
   top: var(--command-palette-height); /* Position below Command Palette */
   z-index: 999;
   border-bottom: 1px solid var(--code-block-border-dark);
