@@ -107,12 +107,23 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
       const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
       if (matchingDefaultTab) {
         addTab(matchingDefaultTab);
+      } else if (currentPath.startsWith('/blog/')) {
+        const postId = currentPath.split('/blog/')[1];
+        if (postId) {
+          const newTab: Tab = {
+            id: `blog-${postId}`,
+            name: `${postId}.qmd`,
+            path: currentPath,
+            language: 'qmd',
+          };
+          addTab(newTab);
+        }
       } else {
         // If the URL does not correspond to a known tab, do nothing and let the user decide.
         // This avoids unexpected tab changes when closing tabs.
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, addTab, activeTabId, defaultTabsList, openTabs]);
 
   return (
     <>
