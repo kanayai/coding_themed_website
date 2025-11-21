@@ -56,45 +56,18 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
       return prevTabs;
     });
     setActiveTabId(tab.id);
-  }, []);
-
-  const removeTab = useCallback((tabId: string) => {
-    if (tabId === 'home') {
-      return; // Prevent closing the home tab
-    }
-    
-    setOpenTabs(prevTabs => {
-      const newTabs = prevTabs.filter(tab => tab.id !== tabId);
-      
-      setActiveTabId(prevActiveTabId => {
-        if (prevActiveTabId === tabId) {
-          const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
-          if (closedTabIndex > 0) {
-            return prevTabs[closedTabIndex - 1].id;
-          } else if (newTabs.length > 0) {
-            return newTabs[0].id;
-          } else {
-            return homeTab.id; // Fallback to home
-          }
-        }
-        return prevActiveTabId;
-      });
-
-      return newTabs;
-    });
-  }, [homeTab]);
+    navigate(tab.path); // Navigate immediately after adding/activating
+  }, [navigate]);
 
   const activateTab = useCallback((tabId: string) => {
     setActiveTabId(tabId);
-  }, []);
-
-  // Effect to handle navigation when activeTabId changes
-  useEffect(() => {
-    const activeTab = openTabs.find(tab => tab.id === activeTabId);
-    if (activeTab && location.pathname !== activeTab.path) {
-      navigate(activeTab.path);
+    const tabToActivate = openTabs.find(tab => tab.id === tabId);
+    if (tabToActivate && location.pathname !== tabToActivate.path) {
+      navigate(tabToActivate.path); // Navigate only if path is different
     }
-  }, [activeTabId, openTabs, navigate, location.pathname]);
+  }, [navigate, openTabs, location.pathname]);
+
+
 
   // Effect to handle URL changes (e.g., browser back/forward, direct URL)
   useEffect(() => {
@@ -106,7 +79,11 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
     } else if (!tabForCurrentPath) {
       const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
       if (matchingDefaultTab) {
-        addTab(matchingDefaultTab);
+        setOpenTabs(prevTabs => {
+          const tabExists = prevTabs.some(t => t.id === matchingDefaultTab.id);
+          return tabExists ? prevTabs : [...prevTabs, matchingDefaultTab];
+        });
+        setActiveTabId(matchingDefaultTab.id);
       } else if (currentPath.startsWith('/blog/')) {
         const postId = currentPath.split('/blog/')[1];
         if (postId) {
@@ -116,14 +93,15 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
             path: currentPath,
             language: 'qmd',
           };
-          addTab(newTab);
+          setOpenTabs(prevTabs => {
+            const tabExists = prevTabs.some(t => t.id === newTab.id);
+            return tabExists ? prevTabs : [...prevTabs, newTab];
+          });
+          setActiveTabId(newTab.id);
         }
-      } else {
-        // If the URL does not correspond to a known tab, do nothing and let the user decide.
-        // This avoids unexpected tab changes when closing tabs.
       }
     }
-  }, [location.pathname, addTab, activeTabId, defaultTabsList, openTabs]);
+  }, [location.pathname, activeTabId, defaultTabsList, openTabs]);
 
   return (
     <>
