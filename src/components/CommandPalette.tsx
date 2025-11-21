@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './CommandPalette.scss';
 import { useSearch } from '../context/SearchContext'; // Import useSearch hook
+import { BsLayoutSplit, BsLayoutSidebar, BsLayoutSidebarReverse } from 'react-icons/bs';
 
 const CommandPalette: React.FC = () => {
   const { searchTerm, setSearchTerm, isSearchVisible, toggleSearchVisibility } = useSearch();
@@ -27,10 +28,6 @@ const CommandPalette: React.FC = () => {
     }
   };
 
-  if (!isSearchVisible) {
-    return null; // Don't render if not visible
-  }
-
   return (
     <div className="command-palette">
       <div className="window-controls">
@@ -38,16 +35,25 @@ const CommandPalette: React.FC = () => {
         <span className="control-button minimize"></span>
         <span className="control-button maximize"></span>
       </div>
-      <div className="command-input-container">
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Type command or search (Ctrl+P)"
-          className="command-input"
-          value={searchTerm}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-        />
+      
+      {isSearchVisible && (
+        <div className="command-input-container">
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Type command or search (Ctrl+P)"
+            className="command-input"
+            value={searchTerm}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+      )}
+
+      <div className="layout-icons">
+        <BsLayoutSplit />
+        <BsLayoutSidebar />
+        <BsLayoutSidebarReverse />
       </div>
     </div>
   );

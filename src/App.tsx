@@ -13,6 +13,8 @@ import TopTabsBar from './components/TopTabsBar';
 import CommandPalette from './components/CommandPalette';
 import TabManager, { Tab } from './components/TabManager'; // Import TabManager and Tab interface
 import { Routes, Route } from 'react-router-dom'; // Re-introduce Routes and Route
+import { useEffect } from 'react'; // Import useEffect
+import { useSearch } from './context/SearchContext'; // Import useSearch
 
 import './App.scss'; // Import App styles
 
@@ -23,6 +25,23 @@ import CurrentCoursesPage from './pages/CurrentCoursesPage'; // Import CurrentCo
 import PastCoursesPage from './pages/PastCoursesPage'; // Import PastCoursesPage
 
 function App() {
+  const { toggleSearchVisibility } = useSearch();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'Enter') {
+        e.preventDefault();
+        toggleSearchVisibility();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [toggleSearchVisibility]);
+
   return (
     <>
       {/* New VSCode-like Layout */}
@@ -30,7 +49,7 @@ function App() {
       <div className="main-layout">
         <ActivityBar />
         <TabManager>
-          {(openTabs, activeTabId, addTab, removeTab, activateTab, isInitialLoad) => (
+          {(openTabs, activeTabId, addTab, removeTab, activateTab) => (
             <>
               <PrimarySideBar openTab={addTab} activeTabId={activeTabId} />
               <div className="main-content-container">
