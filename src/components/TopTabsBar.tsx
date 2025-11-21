@@ -20,13 +20,11 @@ const TopTabsBar: React.FC = () => {
             >
               <span>
                 {tab.name}
-                {tab.id !== 'home' && ( // Conditionally render close button
-                  <BsX className="close-tab-icon" onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    removeTab(tab.id); // Remove tab on close icon click
-                  }} />
-                )}
+                <BsX className="close-tab-icon" onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  removeTab(tab.id); // Remove tab on close icon click
+                }} />
               </span>
             </NavLink>
           </Nav.Item>

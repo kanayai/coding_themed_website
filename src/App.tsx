@@ -12,6 +12,7 @@ import ActivityBar from './components/ActivityBar';
 import PrimarySideBar from './components/PrimarySideBar';
 import TopTabsBar from './components/TopTabsBar';
 import CommandPalette from './components/CommandPalette';
+import { useTab } from './context/TabContext'; // Import useTab hook
 
 import './App.scss'; // Import App styles
 
@@ -22,6 +23,8 @@ import CurrentCoursesPage from './pages/CurrentCoursesPage'; // Import CurrentCo
 import PastCoursesPage from './pages/PastCoursesPage'; // Import PastCoursesPage
 
 function App() {
+  const { activeTabId } = useTab(); // Use the useTab hook
+
   return (
     <>
       {/* New VSCode-like Layout */}
@@ -32,18 +35,22 @@ function App() {
         <div className="main-content-container">
           <TopTabsBar />
           <div className="main-content-inner">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:postId" element={<BlogPostPage />} />
-              <Route path="/research" element={<Research />} />
-              <Route path="/research/projects" element={<ResearchProjectsPage />} />
-              <Route path="/research/publications" element={<PublicationsPage />} />
-              <Route path="/teaching/current-courses" element={<CurrentCoursesPage />} /> {/* New route */}
-              <Route path="/teaching/past-courses" element={<PastCoursesPage />} />     {/* New route */}
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
+            {activeTabId ? ( // Conditionally render content based on activeTabId
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:postId" element={<BlogPostPage />} />
+                <Route path="/research" element={<Research />} />
+                <Route path="/research/projects" element={<ResearchProjectsPage />} />
+                <Route path="/research/publications" element={<PublicationsPage />} />
+                <Route path="/teaching/current-courses" element={<CurrentCoursesPage />} /> {/* New route */}
+                <Route path="/teaching/past-courses" element={<PastCoursesPage />} />     {/* New route */}
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+            ) : (
+              <div style={{ backgroundColor: '#000', flexGrow: 1 }}></div> // Black background when no tabs are open
+            )}
           </div>
         </div>
       </div>

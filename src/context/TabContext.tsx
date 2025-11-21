@@ -30,10 +30,15 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     { id: 'pastCourses', name: 'past_courses.tex', path: '/teaching/past-courses', language: 'latex' },
     { id: 'contact_file', name: 'contact.yaml', path: '/contact', language: 'yaml' },
   ];
-  const [openTabs, setOpenTabs] = useState<Tab[]>([homeTab]);
-  const [activeTabId, setActiveTabId] = useState<string | null>('home');
+  const [openTabs, setOpenTabs] = useState<Tab[]>([]);
+  const [activeTabId, setActiveTabId] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Effect to add home tab on initial mount
+  useEffect(() => {
+    addTab(homeTab);
+  }, []); // Empty dependency array means this runs once on mount
 
   const addTab = useCallback((tab: Tab) => {
     const tabExists = openTabs.some(t => t.id === tab.id);
@@ -45,39 +50,42 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, [openTabs, navigate]);
 
   const removeTab = useCallback((tabId: string) => {
-    if (tabId === 'home') {
-      return; // Prevent closing the home tab
-    }
     setOpenTabs(prevTabs => {
       const newTabs = prevTabs.filter(tab => tab.id !== tabId);
+      
+      if (newTabs.length === 0) {
+        setActiveTabId(null);
+        navigate('/'); // Navigate to home or a default empty state
+        return [];
+      }
+
       if (activeTabId === tabId) {
-        // If the active tab is closed, determine which tab to activate next
         const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
         let newActiveTab = null;
 
-        // Prioritize the tab to the left of the closed tab
         if (closedTabIndex > 0) {
           newActiveTab = prevTabs[closedTabIndex - 1];
         } else if (newTabs[0]) {
-          // If no tab to the left, activate the one that shifted into its place (the new first tab)
           newActiveTab = newTabs[0];
         } else {
-          // Fallback to home if no other tabs exist (should only happen if home is the only tab left)
-          newActiveTab = homeTab;
+          // Fallback, though should be covered by newTabs.length === 0 check
+          setActiveTabId(null);
+          navigate('/');
+          return [];
         }
 
         if (newActiveTab) {
           setActiveTabId(newActiveTab.id);
           navigate(newActiveTab.path);
         } else {
-          // Fallback if somehow newActiveTab is null (shouldn't happen with homeTab always present)
-          setActiveTabId('home');
+          // Fallback if newActiveTab is somehow null (should not happen now)
+          setActiveTabId(null);
           navigate('/');
         }
       }
       return newTabs;
     });
-  }, [activeTabId, navigate, homeTab]);
+  }, [activeTabId, navigate]);
 
   const activateTab = useCallback((tabId: string) => {
     const tabToActivate = openTabs.find(tab => tab.id === tabId);
@@ -91,21 +99,34 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const currentPath = location.pathname;
     const activeTab = openTabs.find(tab => tab.path === currentPath);
+
     if (activeTab && activeTabId !== activeTab.id) {
       setActiveTabId(activeTab.id);
-    } else if (!activeTab) {
-      // If the current path doesn't match an open tab, check if it's a known default tab
+    } else if (!activeTab && currentPath !== '/') {
       const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
       if (matchingDefaultTab) {
         addTab(matchingDefaultTab);
-      } else if (currentPath !== '/') {
-        // If it's not a known default tab and not the home page,
-        // and if currently active tab is not home, navigate to home.
-        // This handles cases like dynamic blog post pages or unknown URLs.
-        if (activeTabId !== 'home') {
-          setActiveTabId('home');
-          navigate('/');
+      } else {
+        // If current path is not an open tab, not '/', and not a matching default tab,
+        // it means we're on a path that isn't intended to be a persistent tab (e.g., dynamic blog post)
+        // or an invalid URL. In this case, we don't automatically open a tab for it.
+        // The activeTabId should reflect if one of our open tabs is active.
+        // if activeTabId is not null and the current path does not match any open tab, set activeTabId to null.
+        const tabMatchingPath = openTabs.find(tab => tab.path === currentPath);
+        if (tabMatchingPath) {
+          setActiveTabId(tabMatchingPath.id);
+        } else if (activeTabId !== null) { // If an active tab is set but doesn't match current path
+          setActiveTabId(null);
         }
+      }
+    } else if (currentPath === '/' && activeTabId !== homeTab.id) {
+      // If we navigate back to home, and home isn't the active tab, activate it
+      const homeIsOpen = openTabs.some(tab => tab.id === homeTab.id);
+      if (homeIsOpen) {
+        setActiveTabId(homeTab.id);
+      } else {
+        // If home is not open, then ensure no tab is active
+        setActiveTabId(null);
       }
     }
   }, [location.pathname, openTabs, activeTabId, navigate, addTab, defaultTabsList]);
