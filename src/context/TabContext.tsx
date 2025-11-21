@@ -53,12 +53,27 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       if (activeTabId === tabId) {
         // If the active tab is closed, determine which tab to activate next
         const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
-        const newActiveTab = newTabs[closedTabIndex - 1] || newTabs[closedTabIndex];
+        let newActiveTab = null;
+
+        if (newTabs.length > 0) {
+          // Try to activate the tab to the left
+          if (closedTabIndex > 0 && newTabs[closedTabIndex -1] ) {
+            newActiveTab = newTabs[closedTabIndex - 1];
+          } else if (newTabs[closedTabIndex]) {
+            // If no tab to the left, activate the one that shifted into its place
+            newActiveTab = newTabs[closedTabIndex];
+          } else {
+            // Fallback to the last tab if the above conditions don't find one
+            newActiveTab = newTabs[newTabs.length - 1];
+          }
+        }
+
         if (newActiveTab) {
           setActiveTabId(newActiveTab.id);
           navigate(newActiveTab.path);
         } else {
-          // This case should ideally not be hit since 'home' is always present
+          // This case should only be hit if somehow all tabs are closed except home.
+          // Since home is unclosable, this means if there are no other tabs, home becomes active.
           setActiveTabId('home');
           navigate('/');
         }
