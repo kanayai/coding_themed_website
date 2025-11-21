@@ -12,7 +12,9 @@ const sectionMap = {
   research: { id: 'research', name: 'research', isFolder: true, icon: BsFolder }, // Research as a folder
   publications: { id: 'publications', name: 'publications.R', path: '/research/publications', language: 'r', icon: BsFileEarmark },
   projects: { id: 'projects', name: 'projects.R', path: '/research/projects', language: 'r', icon: BsFileEarmark },
-  teaching: { id: 'teaching', name: 'teaching.tex', path: '/teaching', language: 'latex', icon: BsPen },
+  teaching: { id: 'teaching', name: 'teaching', isFolder: true, icon: BsFolder }, // Teaching as a folder
+  currentCourses: { id: 'currentCourses', name: 'current_courses.tex', path: '/teaching/current-courses', language: 'latex', icon: BsFileEarmark },
+  pastCourses: { id: 'pastCourses', name: 'past_courses.tex', path: '/teaching/past-courses', language: 'latex', icon: BsFileEarmark },
   contact: { id: 'contact', name: 'contact.yaml', path: '/contact', language: 'yaml', icon: BsEnvelope },
 };
 
@@ -22,6 +24,7 @@ type SectionId = keyof typeof sectionMap;
 const PrimarySideBar: React.FC = () => {
   const { addTab, activeTabId } = useTab();
   const [isResearchOpen, setIsResearchOpen] = useState(false); // State for Research folder
+  const [isTeachingOpen, setIsTeachingOpen] = useState(false); // State for Teaching folder
 
   const handleSectionClick = (sectionId: SectionId) => {
     const section = sectionMap[sectionId];
@@ -34,15 +37,19 @@ const PrimarySideBar: React.FC = () => {
     setIsResearchOpen(prev => !prev);
   };
 
-  const SidebarItem = ({ sectionId, label, Icon, isFolder = false, isSubItem = false }: { sectionId: SectionId, label: string, Icon: any, isFolder?: boolean, isSubItem?: boolean }) => {
+  const toggleTeaching = () => {
+    setIsTeachingOpen(prev => !prev);
+  };
+
+  const SidebarItem = ({ sectionId, label, Icon, isFolder = false, isSubItem = false, isOpen }: { sectionId: SectionId, label: string, Icon: any, isFolder?: boolean, isSubItem?: boolean, isOpen?: boolean }) => {
     const isActive = activeTabId === sectionId;
     const itemClass = `sidebar-item ${isActive ? 'active' : ''} ${isSubItem ? 'sidebar-sub-item' : ''}`;
 
     if (isFolder) {
       return (
-        <div className="sidebar-item-toggle" onClick={toggleResearch}>
+        <div className="sidebar-item-toggle" onClick={sectionId === 'research' ? toggleResearch : toggleTeaching}>
           <div className="d-flex align-items-center">
-            {isResearchOpen ? <BsChevronDown className="sidebar-arrow" /> : <BsChevronRight className="sidebar-arrow" />}
+            {isOpen ? <BsChevronDown className="sidebar-arrow" /> : <BsChevronRight className="sidebar-arrow" />}
             <Icon className="sidebar-icon" />
             <span className="sidebar-item-label">{label}</span>
           </div>
@@ -71,7 +78,7 @@ const PrimarySideBar: React.FC = () => {
         <SidebarItem sectionId="about" label="About" Icon={sectionMap.about.icon} />
         <SidebarItem sectionId="blog" label="Blog" Icon={sectionMap.blog.icon} />
         
-        <SidebarItem sectionId="research" label="Research" Icon={sectionMap.research.icon} isFolder={true} />
+        <SidebarItem sectionId="research" label="Research" Icon={sectionMap.research.icon} isFolder={true} isOpen={isResearchOpen} />
         {isResearchOpen && (
           <div className="sidebar-submenu">
             <SidebarItem sectionId="publications" label="Publications" Icon={sectionMap.publications.icon} isSubItem={true} />
@@ -79,7 +86,14 @@ const PrimarySideBar: React.FC = () => {
           </div>
         )}
 
-        <SidebarItem sectionId="teaching" label="Teaching" Icon={sectionMap.teaching.icon} />
+        <SidebarItem sectionId="teaching" label="Teaching" Icon={sectionMap.teaching.icon} isFolder={true} isOpen={isTeachingOpen} />
+        {isTeachingOpen && (
+          <div className="sidebar-submenu">
+            <SidebarItem sectionId="currentCourses" label="Current Courses" Icon={sectionMap.currentCourses.icon} isSubItem={true} />
+            <SidebarItem sectionId="pastCourses" label="Past Courses" Icon={sectionMap.pastCourses.icon} isSubItem={true} />
+          </div>
+        )}
+
         <SidebarItem sectionId="contact" label="Contact" Icon={sectionMap.contact.icon} />
       </Nav>
     </div>

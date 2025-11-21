@@ -18,6 +18,8 @@ import './App.scss'; // Import App styles
 import ResearchProjectsPage from './pages/ResearchProjectsPage'; // Import ResearchProjectsPage
 import PublicationsPage from './pages/PublicationsPage'; // Import PublicationsPage
 import BlogPostPage from './pages/BlogPostPage'; // Import BlogPostPage
+import CurrentCoursesPage from './pages/CurrentCoursesPage'; // Import CurrentCoursesPage
+import PastCoursesPage from './pages/PastCoursesPage'; // Import PastCoursesPage
 
 function App() {
   return (
@@ -38,7 +40,8 @@ function App() {
               <Route path="/research" element={<Research />} />
               <Route path="/research/projects" element={<ResearchProjectsPage />} />
               <Route path="/research/publications" element={<PublicationsPage />} />
-              <Route path="/teaching" element={<Teaching />} />
+              <Route path="/teaching/current-courses" element={<CurrentCoursesPage />} /> {/* New route */}
+              <Route path="/teaching/past-courses" element={<PastCoursesPage />} />     {/* New route */}
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
