@@ -60,46 +60,38 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
   }, [openTabs, navigate]);
 
   const removeTab = useCallback((tabId: string) => {
+    if (tabId === 'home') {
+      return; // Prevent closing the home tab
+    }
+
     setOpenTabs(prevTabs => {
       const newTabs = prevTabs.filter(tab => tab.id !== tabId);
       
-      if (newTabs.length === 0) {
-        setActiveTabId(null);
-        // Do not navigate, App.tsx will display the black background
-        return [];
-      }
+      setActiveTabId(prevActiveTabId => {
+        if (prevActiveTabId === tabId) {
+          const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
+          let newActiveTab = null;
 
-      if (activeTabId === tabId) {
-        const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
-        let newActiveTab = null;
-
-        // Prioritize the tab to the left of the closed tab
-        if (closedTabIndex > 0) {
-          newActiveTab = prevTabs[closedTabIndex - 1];
-        } else if (newTabs[0]) {
-          // If no tab to the left, activate the one that shifted into its place (the new first tab)
-          newActiveTab = newTabs[0];
-        } else {
-          // Fallback to home if no other tabs exist, but this should be handled by newTabs.length === 0
-          // If home is the only tab left (and it's now closed), then newTabs.length would be 0
-          // This else block is mostly a safeguard.
-          setActiveTabId(null);
-          // Do not navigate, App.tsx will display the black background
-          return [];
+          if (closedTabIndex > 0) {
+            newActiveTab = prevTabs[closedTabIndex - 1];
+          } else if (newTabs.length > 0) {
+            newActiveTab = newTabs[0];
+          } else {
+            // Should not be reached since home is unclosable
+            return 'home';
+          }
+          
+          if (newActiveTab) {
+            navigate(newActiveTab.path);
+            return newActiveTab.id;
+          }
         }
+        return prevActiveTabId;
+      });
 
-        if (newActiveTab) {
-          setActiveTabId(newActiveTab.id);
-          navigate(newActiveTab.path);
-        } else {
-          // Fallback if newActiveTab is somehow null (should not happen now with newTabs.length === 0 check)
-          setActiveTabId(null);
-          // Do not navigate
-        }
-      }
       return newTabs;
     });
-  }, [activeTabId, navigate]);
+  }, [navigate]);
 
   const activateTab = useCallback((tabId: string) => {
     const tabToActivate = openTabs.find(tab => tab.id === tabId);
