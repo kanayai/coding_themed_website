@@ -19,8 +19,19 @@ interface TabContextType {
 const TabContext = createContext<TabContextType | undefined>(undefined);
 
 export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [openTabs, setOpenTabs] = useState<Tab[]>([]);
-  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+  const homeTab: Tab = { id: 'home', name: 'home.py', path: '/', language: 'python' };
+  const defaultTabsList: Tab[] = [
+    homeTab,
+    { id: 'about_file', name: 'about.py', path: '/about', language: 'python' },
+    { id: 'blog_file', name: 'blog.qmd', path: '/blog', language: 'yaml' },
+    { id: 'publications', name: 'publications.R', path: '/research/publications', language: 'r' },
+    { id: 'projects', name: 'projects.R', path: '/research/projects', language: 'r' },
+    { id: 'currentCourses', name: 'current_courses.tex', path: '/teaching/current-courses', language: 'latex' },
+    { id: 'pastCourses', name: 'past_courses.tex', path: '/teaching/past-courses', language: 'latex' },
+    { id: 'contact_file', name: 'contact.yaml', path: '/contact', language: 'yaml' },
+  ];
+  const [openTabs, setOpenTabs] = useState<Tab[]>([homeTab]);
+  const [activeTabId, setActiveTabId] = useState<string | null>('home');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,46 +41,22 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const activeTab = openTabs.find(tab => tab.path === currentPath);
     if (activeTab && activeTabId !== activeTab.id) {
       setActiveTabId(activeTab.id);
-    } else if (!activeTab && openTabs.length > 0 && activeTabId !== null) {
-      // If the current path doesn't match an open tab, but a tab is active,
-      // it means the user navigated directly or refreshed.
-      // We might want to add the current page as a tab if it's not already open.
-      const defaultTabs: Tab[] = [
-        { id: 'home', name: 'home.py', path: '/', language: 'python' },
-        { id: 'about', name: 'about.py', path: '/about', language: 'python' },
-        { id: 'blog', name: 'blog.qmd', path: '/blog', language: 'yaml' },
-        { id: 'research', name: 'research.R', path: '/research', language: 'r' },
-        { id: 'teaching', name: 'teaching.tex', path: '/teaching', language: 'latex' },
-        { id: 'contact', name: 'contact.yaml', path: '/contact', language: 'yaml' },
-      ];
-      const matchingDefaultTab = defaultTabs.find(tab => tab.path === currentPath);
+    } else if (!activeTab) {
+      // If the current path doesn't match an open tab, check if it's a known default tab
+      const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
       if (matchingDefaultTab) {
         addTab(matchingDefaultTab);
-      } else {
-        // If no matching default tab, and somehow we're here, maybe just deactivate
-        // this might happen for blog post pages, which are dynamic
-        // For now, let's just make sure the activeTabId matches the URL if it's an open tab
-        const tabMatchingPath = openTabs.find(tab => tab.path === currentPath);
-        if (tabMatchingPath) {
-          setActiveTabId(tabMatchingPath.id);
+      } else if (currentPath !== '/') {
+        // If it's not a known default tab and not the home page,
+        // and if currently active tab is not home, navigate to home.
+        // This handles cases like dynamic blog post pages or unknown URLs.
+        if (activeTabId !== 'home') {
+          setActiveTabId('home');
+          navigate('/');
         }
       }
-    } else if (openTabs.length === 0 && activeTabId === null) {
-      // If no tabs are open, and we are on a known path, add it as the first tab
-      const defaultTabs: Tab[] = [
-        { id: 'home', name: 'home.py', path: '/', language: 'python' },
-        { id: 'about', name: 'about.py', path: '/about', language: 'python' },
-        { id: 'blog', name: 'blog.qmd', path: '/blog', language: 'yaml' },
-        { id: 'research', name: 'research.R', path: '/research', language: 'r' },
-        { id: 'teaching', name: 'teaching.tex', path: '/teaching', language: 'latex' },
-        { id: 'contact', name: 'contact.yaml', path: '/contact', language: 'yaml' },
-      ];
-      const matchingDefaultTab = defaultTabs.find(tab => tab.path === currentPath);
-      if (matchingDefaultTab) {
-        addTab(matchingDefaultTab);
-      }
     }
-  }, [location.pathname, openTabs]); // activeTabId removed from deps to prevent infinite loop
+  }, [location.pathname, openTabs, activeTabId, navigate, addTab, defaultTabsList]);
 
   const addTab = (tab: Tab) => {
     const tabExists = openTabs.some(t => t.id === tab.id);
@@ -86,19 +73,18 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
     setOpenTabs(prevTabs => {
       const newTabs = prevTabs.filter(tab => tab.id !== tabId);
-      if (newTabs.length === 0) {
-        // This case should ideally not be hit if 'home' cannot be closed,
-        // but as a fallback, ensure 'home' is re-added if all others are closed.
-        const homeTab: Tab = { id: 'home', name: 'home.py', path: '/', language: 'python' };
-        setOpenTabs([homeTab]);
-        setActiveTabId(homeTab.id);
-        navigate(homeTab.path);
-        return [homeTab];
-      } else if (activeTabId === tabId) {
-        // If the active tab is closed, activate the last tab in the new list
-        const lastTab = newTabs[newTabs.length - 1];
-        setActiveTabId(lastTab.id);
-        navigate(lastTab.path);
+      if (activeTabId === tabId) {
+        // If the active tab is closed, determine which tab to activate next
+        const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
+        const newActiveTab = newTabs[closedTabIndex - 1] || newTabs[closedTabIndex];
+        if (newActiveTab) {
+          setActiveTabId(newActiveTab.id);
+          navigate(newActiveTab.path);
+        } else {
+          // This case should ideally not be hit since 'home' is always present
+          setActiveTabId('home');
+          navigate('/');
+        }
       }
       return newTabs;
     });
