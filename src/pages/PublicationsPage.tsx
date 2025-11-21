@@ -20,6 +20,16 @@ const PublicationsPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const publicationsPerPage = 20;
 
+  const rCodeBlock = `library("tidyverse")
+library("readr")
+publications_df <- read_csv("data/publications.csv")
+publications_df %>%
+  arrange(desc(year)) %>%
+  head(20) %>%
+  as_tibble()
+`;
+  const matchesCodeBlock = searchTerm === '' || rCodeBlock.toLowerCase().includes(searchTerm.toLowerCase());
+
   useEffect(() => {
     Papa.parse(publicationsCsv, {
       header: true,
@@ -49,6 +59,10 @@ const PublicationsPage: React.FC = () => {
       <Title>Publications | Prof. Karim AI</Title>
       <h1>Publications</h1>
 
+      {matchesCodeBlock && (
+        <CodeBlock code={rCodeBlock} language="r" />
+      )}
+      
       {(filteredPublications.length > 0 || searchTerm === '') && (
         <>
           <div className="code-block" style={{ overflowX: 'auto' }}>

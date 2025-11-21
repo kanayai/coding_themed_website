@@ -9,23 +9,11 @@ const Research: React.FC = () => {
 
   const researchProjectsContent = "Information about research projects will be added here soon.";
   const matchesResearchProjects = searchTerm === '' || researchProjectsContent.toLowerCase().includes(searchTerm.toLowerCase());
-  const rCodeBlock = `library("tidyverse")
-library("readr")
-publications_df <- read_csv("data/publications.csv")
-publications_df %>%
-  arrange(desc(year)) %>%
-  head(20) %>%
-  as_tibble()
-`;
-  const matchesCodeBlock = searchTerm === '' || rCodeBlock.toLowerCase().includes(searchTerm.toLowerCase());
 
 
   return (
     <div className="page-content">
       <Title>Research | Prof. Karim AI</Title>
-      {matchesCodeBlock && (
-        <CodeBlock code={rCodeBlock} language="r" />
-      )}
 
       {matchesResearchProjects && (
         <>
@@ -34,7 +22,7 @@ publications_df %>%
         </>
       )}
 
-      {(!matchesCodeBlock && !matchesResearchProjects) && (
+      {!matchesResearchProjects && (
         <p>No matching content found on this page.</p>
       )}
     </div>
