@@ -5,7 +5,7 @@ import { BsFileEarmarkCode, BsInfoCircle, BsNewspaper, BsBook, BsPen, BsEnvelope
 import { Tab } from './TabManager'; // Import Tab interface
 import './PrimarySideBar.scss';
 
-const sectionMap = {
+export const sectionMap = {
   home: { id: 'home', name: 'Home', isFolder: true, icon: BsFolder },
   home_file: { id: 'home_file', name: 'home.py', path: '/', language: 'python', icon: BsFileEarmarkCode },
   about: { id: 'about', name: 'About', isFolder: true, icon: BsFolder },

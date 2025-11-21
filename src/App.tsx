@@ -51,6 +51,7 @@ function App() {
         <TabManager>
           {(openTabs, activeTabId, addTab, removeTab, activateTab) => (
             <>
+              <CommandPalette addTab={addTab} />
               <PrimarySideBar openTab={addTab} activeTabId={activeTabId} />
               <div className="main-content-container">
                 <TopTabsBar openTabs={openTabs} activeTabId={activeTabId} activateTab={activateTab} removeTab={removeTab} />

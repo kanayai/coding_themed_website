@@ -40,6 +40,7 @@
     flex-grow: 1;
     display: flex;
     justify-content: center; /* Center the input within its container */
+    position: relative; /* For suggestions list */
   }
 
   .command-input, .command-input-placeholder {
@@ -70,6 +71,33 @@
   .command-input:focus {
     border-color: #007acc; /* Highlight on focus */
     background-color: var(--code-block-bg-dark);
+  }
+
+  .suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    background-color: var(--code-block-bg-dark);
+    border: 1px solid var(--code-block-border-dark);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1003;
+
+    li {
+      padding: 5px 10px;
+      cursor: pointer;
+      color: var(--text-color-dark);
+
+      &.active, &:hover {
+        background-color: #007acc;
+        color: #fff;
+      }
+    }
   }
 
   .layout-icons {
@@ -109,12 +137,26 @@ body[data-theme='light'] {
       border-color: #007acc;
       background-color: var(--code-block-bg-light);
     }
+
+    .suggestions-list {
+      background-color: var(--code-block-bg-light);
+      border-color: var(--code-block-border-light);
+
+      li {
+        color: var(--text-color-light);
+
+        &.active, &:hover {
+          background-color: #007acc;
+          color: #fff;
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 768px) {
   .command-palette {
-    .command-input, .command-input-placeholder {
+    .command-input, .command-input-placeholder, .suggestions-list {
       width: 90%; /* Increase width on smaller screens */
     }
   }
