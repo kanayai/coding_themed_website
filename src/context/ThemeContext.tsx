@@ -8,11 +8,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    // Initialize theme from localStorage or default to 'dark'
-    const storedTheme = localStorage.getItem('theme');
-    return (storedTheme === 'light' || storedTheme === 'dark') ? storedTheme : 'dark';
-  });
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
     // Apply theme to the document body
