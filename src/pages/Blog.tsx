@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import { Container, Row, Col, Card } from 'react-bootstrap'; // No longer needed
 import { Row, Col, Card } from 'react-bootstrap';
 import '../styles/pages.scss';
-import anscombeQuartetContent from '../../_quarto_source/anscombe_quartet.qmd?raw'; // Import as raw string
 import { useSearch } from '../context/SearchContext';
-import { Head, Title } from 'react-head';
+import { Title } from 'react-head';
 import CodeBlock from '../components/CodeBlock';
 
 interface BlogPost {
@@ -15,14 +13,13 @@ interface BlogPost {
   language: string;
 }
 
-const qmdHeaderRegex = /---\s*([\s\S]*?)\s*---/; // Define the regex here
+const qmdHeaderRegex = /---\s*([\s\S]*?)\s*---/;
 
-// Function to parse YAML header from QMD content
 const parseQmdHeader = (qmdContent: string) => {
   const match = qmdHeaderRegex.exec(qmdContent);
   if (match && match[1]) {
     const yamlString = match[1];
-    const lines = yamlString.split('\\n');
+    const lines = yamlString.split('\n');
     const header: { [key: string]: string } = {};
     lines.forEach(line => {
       const parts = line.split(':');
@@ -37,48 +34,41 @@ const parseQmdHeader = (qmdContent: string) => {
   return {};
 };
 
-// Function to extract first paragraph as description
 const extractDescription = (qmdContent: string) => {
   const contentAfterYaml = qmdContent.replace(/---\s*[\s\S]*?\s*---/, '').trim();
-  const firstParagraphMatch = contentAfterYaml.match(/^(.*?)\\n\\n/s);
-  return firstParagraphMatch ? firstParagraphMatch[1].replace(/\\n/g, ' ') : contentAfterYaml.substring(0, 150) + '...';
+  const firstParagraphMatch = contentAfterYaml.match(/^(.*?)\n\n/s);
+  return firstParagraphMatch ? firstParagraphMatch[1].replace(/\n/g, ' ') : contentAfterYaml.substring(0, 150) + '...';
 };
 
 const Blog: React.FC = () => {
   const { searchTerm } = useSearch();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
-  const simulatedQmdContent = anscombeQuartetContent; // Use the imported raw content
-  const anscombeHeader = parseQmdHeader(simulatedQmdContent);
-  const anscombeDescription = extractDescription(simulatedQmdContent);
-
   useEffect(() => {
-    // Simulate fetching blog posts
-    const posts: BlogPost[] = [
-      {
-        title: anscombeHeader.title || "Anscombe's Quartet",
-        date: anscombeHeader.date || "Unknown Date",
-        description: anscombeDescription,
-        path: '/blog/anscombe-quartet', // Example path for detail page
-        language: 'qmd',
-      },
-      // Add more simulated blog posts here
-      {
-        title: "Introduction to Statistical Modeling",
-        date: "October 26, 2024",
-        description: "A comprehensive guide to fundamental statistical modeling techniques and their applications in data science.",
-        path: '/blog/statistical-modeling',
-        language: 'qmd',
-      },
-      {
-        title: "Advanced React Hooks for Performance",
-        date: "November 10, 2024",
-        description: "Exploring advanced React hooks like useMemo, useCallback, and custom hooks to optimize component performance.",
-        path: '/blog/react-hooks',
-        language: 'qmd',
-      },
-    ];
-    setBlogPosts(posts);
+    const fetchPosts = async () => {
+      const postModules = import.meta.glob('../../_quarto_source/*.qmd', { query: '?raw', import: 'default' });
+      const posts: BlogPost[] = [];
+
+      for (const path in postModules) {
+        const qmdContent = await postModules[path]();
+        const header = parseQmdHeader(qmdContent);
+        const description = extractDescription(qmdContent);
+        const slug = path.split('/').pop()?.replace('.qmd', '');
+        
+        if (slug) {
+          posts.push({
+            title: header.title || 'Untitled Post',
+            date: header.date || 'Unknown Date',
+            description,
+            path: `/blog/${slug}`,
+            language: 'qmd',
+          });
+        }
+      }
+      setBlogPosts(posts);
+    };
+
+    fetchPosts();
   }, []);
 
   const filteredBlogPosts = blogPosts.filter(post =>
