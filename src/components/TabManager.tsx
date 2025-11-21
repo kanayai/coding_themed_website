@@ -42,8 +42,8 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
     { id: 'contact_file', name: 'contact.yaml', path: '/contact', language: 'yaml' },
   ];
 
-  const [openTabs, setOpenTabs] = useState<Tab[]>([]);
-  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+  const [openTabs, setOpenTabs] = useState<Tab[]>([homeTab]);
+  const [activeTabId, setActiveTabId] = useState<string | null>(homeTab.id);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -56,34 +56,25 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
       return prevTabs;
     });
     setActiveTabId(tab.id);
-    navigate(tab.path);
-  }, [openTabs, navigate]);
+  }, []);
 
   const removeTab = useCallback((tabId: string) => {
     if (tabId === 'home') {
       return; // Prevent closing the home tab
     }
-
+    
     setOpenTabs(prevTabs => {
       const newTabs = prevTabs.filter(tab => tab.id !== tabId);
       
       setActiveTabId(prevActiveTabId => {
         if (prevActiveTabId === tabId) {
           const closedTabIndex = prevTabs.findIndex(tab => tab.id === tabId);
-          let newActiveTab = null;
-
           if (closedTabIndex > 0) {
-            newActiveTab = prevTabs[closedTabIndex - 1];
+            return prevTabs[closedTabIndex - 1].id;
           } else if (newTabs.length > 0) {
-            newActiveTab = newTabs[0];
+            return newTabs[0].id;
           } else {
-            // Should not be reached since home is unclosable
-            return 'home';
-          }
-          
-          if (newActiveTab) {
-            navigate(newActiveTab.path);
-            return newActiveTab.id;
+            return homeTab.id; // Fallback to home
           }
         }
         return prevActiveTabId;
@@ -91,50 +82,37 @@ const TabManager: React.FC<TabManagerProps> = ({ children }) => {
 
       return newTabs;
     });
-  }, [navigate]);
+  }, [homeTab]);
 
   const activateTab = useCallback((tabId: string) => {
-    const tabToActivate = openTabs.find(tab => tab.id === tabId);
-    if (tabToActivate) {
-      setActiveTabId(tabToActivate.id);
-      navigate(tabToActivate.path);
-    }
-  }, [openTabs, navigate]);
+    setActiveTabId(tabId);
+  }, []);
 
-  // Effect to handle initial load and URL changes
+  // Effect to handle navigation when activeTabId changes
+  useEffect(() => {
+    const activeTab = openTabs.find(tab => tab.id === activeTabId);
+    if (activeTab && location.pathname !== activeTab.path) {
+      navigate(activeTab.path);
+    }
+  }, [activeTabId, openTabs, navigate, location.pathname]);
+
+  // Effect to handle URL changes (e.g., browser back/forward, direct URL)
   useEffect(() => {
     const currentPath = location.pathname;
-    const tabAlreadyOpen = openTabs.find(tab => tab.path === currentPath);
+    const tabForCurrentPath = openTabs.find(tab => tab.path === currentPath);
 
-    if (tabAlreadyOpen) {
-      // If current path matches an open tab, just activate it if not already active
-      if (activeTabId !== tabAlreadyOpen.id) {
-        setActiveTabId(tabAlreadyOpen.id);
-      }
-    } else {
-      // Current path does NOT match an open tab
+    if (tabForCurrentPath && activeTabId !== tabForCurrentPath.id) {
+      setActiveTabId(tabForCurrentPath.id);
+    } else if (!tabForCurrentPath) {
       const matchingDefaultTab = defaultTabsList.find(tab => tab.path === currentPath);
-
       if (matchingDefaultTab) {
-        // If it's a known default tab but not open, add it and activate
         addTab(matchingDefaultTab);
       } else {
-        // If it's not an open tab AND not a default tab (e.g., dynamic page, unknown URL)
-        // Set activeTabId to null to show the empty state.
-        if (activeTabId !== null) {
-          setActiveTabId(null);
-        }
+        // If the URL does not correspond to a known tab, do nothing and let the user decide.
+        // This avoids unexpected tab changes when closing tabs.
       }
     }
-
-    // Handle initial load specifically: if no tabs are open and we're on '/', add home.
-    // This runs only if openTabs is empty after the above logic, meaning nothing was auto-opened.
-    if (openTabs.length === 0 && currentPath === homeTab.path) {
-      addTab(homeTab);
-    }
-
-  }, [location.pathname, openTabs, activeTabId, addTab, defaultTabsList, homeTab]);
-
+  }, [location.pathname]);
 
   return (
     <>
