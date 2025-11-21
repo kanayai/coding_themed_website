@@ -21,7 +21,16 @@ const TopTabsBar: React.FC<TopTabsBarProps> = ({ openTabs, activeTabId, activate
             <NavLink
               to={tab.path}
               className={activeTabId === tab.id ? 'nav-link active' : 'nav-link'}
-              onClick={() => activateTab(tab.id)}
+              onClick={(e) => {
+                // Check if the click originated from the close button
+                const isCloseButtonClick = (e.target as HTMLElement).closest('.close-tab-icon');
+                if (!isCloseButtonClick) {
+                  activateTab(tab.id);
+                } else {
+                  // If it's the close button, prevent NavLink from activating
+                  e.preventDefault();
+                }
+              }}
             >
               <span>
                 {tab.name}
