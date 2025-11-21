@@ -4,15 +4,52 @@
   min-height: 100%; /* Ensure page content fills the scrolling container */
 }
 
-.code-block {
+/* Jupyter Notebook like styling */
+.jupyter-notebook-like {
+  padding: 0 15px; /* Add padding to the whole notebook container */
+}
+
+.jupyter-cell {
   background-color: var(--code-block-bg-dark);
   border: 1px solid var(--code-block-border-dark);
-  padding: 15px;
   border-radius: 5px;
-  margin-bottom: 20px;
-  overflow: auto;
+  margin-bottom: 15px;
+  overflow: hidden;
+  position: relative;
   transition: background-color 0.3s ease, border-color 0.3s ease;
-  /* flex-grow is removed to allow natural height */
+}
+
+.jupyter-markdown {
+  padding: 15px;
+  color: var(--text-color-dark);
+}
+
+.jupyter-code .code-block {
+  margin: 0; /* Remove default margin from CodeBlock */
+  border: none; /* Remove border from CodeBlock */
+  border-radius: 0; /* Remove border-radius from CodeBlock */
+  background-color: transparent; /* Transparent background for CodeBlock */
+  padding: 0;
+}
+
+.cell-input-prompt, .cell-output-prompt {
+  background-color: var(--code-block-border-dark);
+  color: #777;
+  padding: 5px 15px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8em;
+  border-bottom: 1px solid var(--code-block-border-dark);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.jupyter-output pre {
+  margin: 0;
+  padding: 15px;
+  color: #c586c0; /* A distinct color for output */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+  background-color: var(--background-color-dark); /* Lighter dark background for output */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -71,6 +108,22 @@ p {
 }
 
 body[data-theme='light'] {
+  .jupyter-cell {
+    background-color: var(--code-block-bg-light);
+    border-color: var(--code-block-border-light);
+  }
+  .jupyter-markdown {
+    color: var(--text-color-light);
+  }
+  .cell-input-prompt, .cell-output-prompt {
+    background-color: var(--code-block-border-light);
+    border-bottom-color: var(--code-block-border-light);
+  }
+  .jupyter-output pre {
+    background-color: var(--background-color-light);
+    color: #800000; /* Darker color for output in light theme */
+  }
+
   h1, h2, h3, h4, h5, h6 {
     color: var(--text-color-light);
   }
@@ -116,6 +169,3 @@ body[data-theme='light'] {
     text-overflow: ellipsis;
   }
 }
-
-
-
