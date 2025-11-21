@@ -1,6 +1,7 @@
 .code-block-container {
   margin-bottom: 20px;
   position: relative; /* Add relative positioning for footer */
+  flex-grow: 1; /* Allow container to grow and fill space */
 
   .code-block-header {
     display: flex;

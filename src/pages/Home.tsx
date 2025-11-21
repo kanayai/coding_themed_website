@@ -31,7 +31,7 @@ if __name__ == "__main__":
     <div className="page-content">
       <Title>Home | Prof. Karim AI</Title>
       {matchesSearch ? (
-        <CodeBlock code={pythonCode} language="python" />
+        <CodeBlock code={pythonCode} language="python" extendLineNumbers={true} />
       ) : (
         <p>No matching content found on this page.</p>
       )}
